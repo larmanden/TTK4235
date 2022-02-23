@@ -16,8 +16,8 @@ typedef struct elevator{
     MotorDirection current_motor_dir;
     int currentFloor;
     int nextFloor;
-    int elev_timer;
 
+    int elev_timer;
     STATE state;
     //Queue queue;
 
