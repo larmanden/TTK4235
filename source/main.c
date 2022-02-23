@@ -5,16 +5,24 @@
 #include "driver/elevio.h"
 
 #include "fsm.h"
+#include "elevator.h"
+#include "queue.h"
+
+
 
 
 
 int main(){
 
+    
     elevator el = {DIRN_STOP, 0, 0, 0, IDLE};
     
     /* fsm_init(&el);
-    fsm_run(&el); */
-    
+    elevio_motorDirection(DIRN_UP);
+    fsm_run(&el); */ 
+
+    clearQueue(&el);
+    print_queue(&el);   
 
 }
 

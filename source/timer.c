@@ -19,7 +19,6 @@ int times_up(elevator* el){
 }
 
 int timer(elevator* el){
-    timer_start(el);
     int diff = 0;
     do
     {

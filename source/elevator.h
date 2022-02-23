@@ -11,16 +11,23 @@ typedef enum {
     DOOR_OPEN
 }STATE;
 
-typedef struct elevator{
+
+
+struct elevator{
     MotorDirection current_motor_dir;
     int currentFloor;
     int nextFloor;
 
     int elev_timer;
     STATE state;
-    Queue queue;
+    int queue[N_BUTTONS][N_FLOORS];
 
-} elevator;
+};
 
+typedef struct elevator elevator;
+
+
+
+int check_obstruction(elevator* el);
 
 

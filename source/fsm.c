@@ -64,5 +64,11 @@ void fsm_emergency_stop(elevator* el) {
 
 
 void fsm_moving(elevator* el){
-    elevio_motorDirection(DIRN_UP);
+    if (elevio_floorSensor() == 0){
+        elevio_motorDirection(DIRN_UP);
+    }
+
+    if (elevio_floorSensor() == 3){
+        elevio_motorDirection(DIRN_DOWN);
+    }
 }

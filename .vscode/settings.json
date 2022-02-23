@@ -2,6 +2,7 @@
     "makefile.extensionOutputFolder": "./.vscode",
     "files.associations": {
         "elevator.h": "c",
-        "elevio.h": "c"
+        "elevio.h": "c",
+        "queue.h": "c"
     }
 }

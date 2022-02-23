@@ -2,23 +2,25 @@
 
 
 
-void clearQueue(Queue* q){
-    for (int i = 0; i < N_FLOORS; i++){
-        for (int j = 0; i < N_BUTTONS; i++){
-            q->queue[i][j] = 0;
+
+void clearQueue(elevator* el){
+    for (int i = 0; i < N_BUTTONS; i++){
+        for (int j = 0; j < N_FLOORS; j++){
+            el->queue[i][j] = 0;
         }
     }
-    q->queue[0][2] = -1;
-    q->queue[3][0] = -1;
+    el->queue[2][0] = -1;
+    el->queue[0][3] = -1;
 }
 
 
-void print_queue(Queue* q){
-    /* Display the matrix */
-    for (i = 0; i < 4; i++){
-        for (j = 0; j < 3; j++){
-            printf("%d\t", q->queue[i][j]);
+void print_queue(elevator* el){
+     //Display the matrix
+    for (int i = 0; i < N_BUTTONS; i++){
+        printf("|");
+        for (int j = 0; j < N_FLOORS; j++){
+            printf("%d\t", el->queue[i][j]);
         }
-        printf("\n");
+        printf("|\n");
     }
 }
