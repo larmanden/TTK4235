@@ -8,7 +8,6 @@
 #define DOOR_TIMER 3 
 
 void timer_start(elevator* el);
-
 int times_up(elevator* el);
 
 int timer(elevator* el);

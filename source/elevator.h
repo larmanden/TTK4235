@@ -2,8 +2,7 @@
 #include <stdio.h>
 
 #include "driver/elevio.h"
-
-
+#include "queue.h"
 
 
 typedef enum {
@@ -19,7 +18,7 @@ typedef struct elevator{
 
     int elev_timer;
     STATE state;
-    //Queue queue;
+    Queue queue;
 
 } elevator;
 
