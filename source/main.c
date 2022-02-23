@@ -22,7 +22,13 @@ int main(){
     fsm_run(&el); */ 
 
     clearQueue(&el);
-    print_queue(&el);   
+    print_queue(&el); 
 
+    while (1)
+    {
+        update_queue(&el);
+        print_queue(&el);
+    }
+      
 }
 

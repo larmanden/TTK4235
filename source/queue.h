@@ -16,3 +16,6 @@ void clearQueue(elevator* el);
 //Debugging functions to nicely print the 4x3 matrix
 void print_queue(elevator* el);
 
+void update_queue(elevator* el);
+
+
