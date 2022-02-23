@@ -32,3 +32,7 @@ int check_obstruction(elevator* el);
 void update_current_floor(elevator* el);
 
 int elevator_get_order(elevator* el);
+
+int order_above(elevator* el);
+int order_below(elevator* el);
+void remove_last_order(elevator* el);

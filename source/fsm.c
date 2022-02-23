@@ -22,6 +22,7 @@ void fsm_init(elevator* el){
 
 void fsm_run(elevator* el){
     while (1){
+        print_queue(el);
         if(elevio_stopButton()){
             el->state = EMERGENCY_STOP;
         }
@@ -67,25 +68,27 @@ void fsm_moving(elevator* el){
 
     update_queue(el);
 
-    if( (el->nextFloor - el->currentFloor) < 0){
-        el->current_motor_dir = DIRN_DOWN;
-        elevio_motorDirection(el->current_motor_dir);
+    if (order_above(el)){
+        elevio_motorDirection(DIRN_UP);
     }
-    if( (el->nextFloor - el->currentFloor) > 0){
-        el->current_motor_dir = DIRN_UP;
-        elevio_motorDirection(el->current_motor_dir);
+    if (order_below(el)){
+        elevio_motorDirection(DIRN_DOWN);
     }
 
+
+    update_current_floor(el);
     if(el->currentFloor == el->nextFloor){
         el->state = IDLE;
+        remove_last_order(el);
     }
 }
 
 void fsm_idle(elevator* el){
+    elevio_motorDirection(DIRN_STOP);
     update_current_floor(el);
     update_queue(el);
     int tmp = elevator_get_order(el);
-    if(tmp > 0){
+    if(tmp >= 0){
         el->state = MOVING;
     }
 }
