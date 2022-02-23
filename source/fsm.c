@@ -12,11 +12,11 @@ void fsm_init(elevator* el){
     if(elevio_floorSensor() != -1){
             //Elevator is in a defined floor
             elevio_motorDirection(DIRN_STOP);
-            //updateCurrentFloor(el);
-
-            //Mulig at denne er feil
-            el->state = MOVING;
+            update_current_floor(el);
+            el->state = IDLE;
     }
+   /*  printf("Current floor: \n");
+    printf("%d",el->currentFloor); */
 }
 
 
@@ -28,7 +28,7 @@ void fsm_run(elevator* el){
         switch (el->state)
         {
         case IDLE:
-            printf("IDLE\n");
+        fsm_idle(el);
             break;
         case EMERGENCY_STOP:
             fsm_emergency_stop(el);
@@ -64,11 +64,17 @@ void fsm_emergency_stop(elevator* el) {
 
 
 void fsm_moving(elevator* el){
-    if (elevio_floorSensor() == 0){
-        elevio_motorDirection(DIRN_UP);
-    }
+    update_queue(el);
+    printf("MOVIING \n");
 
-    if (elevio_floorSensor() == 3){
-        elevio_motorDirection(DIRN_DOWN);
+}
+
+void fsm_idle(elevator* el){
+    update_queue(el);
+    if(elevator_has_order(el)){
+        el->state = MOVING;
     }
 }
+
+
+

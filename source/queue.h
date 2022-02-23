@@ -4,6 +4,7 @@
 #include "stdlib.h"
 #include "elevator.h"
 
+
 typedef struct elevator elevator;
 
 //Removing all ordersunknown type name 'elevator'

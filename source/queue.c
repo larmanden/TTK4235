@@ -29,8 +29,7 @@ void update_queue(elevator* el){
         for (int j = 0; j < N_FLOORS; j++){
            int btnPrsd = elevio_callButton(j,i);
            if(btnPrsd == 1){
-               printf("TRUE \n");
-               el->queue[i][j] = 6;
+               el->queue[i][j] = 1;
             }
         }
     }

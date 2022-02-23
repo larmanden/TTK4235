@@ -16,19 +16,11 @@ int main(){
 
     
     elevator el = {DIRN_STOP, 0, 0, 0, IDLE};
-    
-    /* fsm_init(&el);
-    elevio_motorDirection(DIRN_UP);
-    fsm_run(&el); */ 
 
-    clearQueue(&el);
-    print_queue(&el); 
+    //Denne er fackings keeeey_UAns
+    //elevio_init();
 
-    while (1)
-    {
-        update_queue(&el);
-        print_queue(&el);
-    }
-      
+    fsm_init(&el);
+    fsm_run(&el);
 }
 
