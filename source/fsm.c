@@ -17,6 +17,7 @@ void fsm_init(elevator el){
             elevio_motorDirection(DIRN_STOP);
             //updateCurrentFloor(el);
             //el.state = IDLE;
+            return;
     }
 }
 
