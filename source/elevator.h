@@ -31,5 +31,4 @@ typedef struct elevator elevator;
 int check_obstruction(elevator* el);
 void update_current_floor(elevator* el);
 
-
-int elevator_has_order(elevator* el);
+int elevator_get_order(elevator* el);

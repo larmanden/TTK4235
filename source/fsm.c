@@ -55,7 +55,6 @@ void fsm_emergency_stop(elevator* el) {
             printf("WAITING");
         }
     }
-
     //Mulighet for å komme til IDLE
     if(!elevio_stopButton()){
         el->state = IDLE;
@@ -64,14 +63,29 @@ void fsm_emergency_stop(elevator* el) {
 
 
 void fsm_moving(elevator* el){
-    update_queue(el);
-    printf("MOVIING \n");
+    //Step 1: hente ordre
 
+    update_queue(el);
+
+    if( (el->nextFloor - el->currentFloor) < 0){
+        el->current_motor_dir = DIRN_DOWN;
+        elevio_motorDirection(el->current_motor_dir);
+    }
+    if( (el->nextFloor - el->currentFloor) > 0){
+        el->current_motor_dir = DIRN_UP;
+        elevio_motorDirection(el->current_motor_dir);
+    }
+
+    if(el->currentFloor == el->nextFloor){
+        el->state = IDLE;
+    }
 }
 
 void fsm_idle(elevator* el){
+    update_current_floor(el);
     update_queue(el);
-    if(elevator_has_order(el)){
+    int tmp = elevator_get_order(el);
+    if(tmp > 0){
         el->state = MOVING;
     }
 }
