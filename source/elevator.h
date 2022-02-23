@@ -23,15 +23,4 @@ typedef struct elevator{
 } elevator;
 
 
-//Floor member functions
-void updateCurrentFloor(elevator* el);
-
-int elevatorControlRange();
-int ordersAbove(elevator* el);
-int ordersBelow(elevator* el);
-
-void removeOrder(elevator* el);
-
-//Ideen her er og sette nextFloor for å kunne sjekke hvor vi skal
-void executeOrder(elevator* el);
 
