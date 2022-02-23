@@ -16,7 +16,7 @@ void fsm_init(elevator el){
             //Elevator is in a defined floor
             elevio_motorDirection(DIRN_STOP);
             //updateCurrentFloor(el);
-            el.state = IDLE;
+            //el.state = IDLE;
     }
 }
 

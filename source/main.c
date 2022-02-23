@@ -25,7 +25,8 @@ int main(){
     //printf("halla\n");
     
     elevator el;
-
+    el.state = IDLE;
+    
     //examplereet();
 
     fsm_init(el);

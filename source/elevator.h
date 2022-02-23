@@ -1,7 +1,7 @@
 #pragma once
 
 #include "driver/elevio.h"
-#include "queue.h"
+
 
 
 
@@ -18,7 +18,7 @@ typedef struct elevator{
     int elev_timer;
 
     STATE state;
-    Queue queue;
+    //Queue queue;
 
 } elevator;
 
