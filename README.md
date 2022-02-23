@@ -1,2 +1,2 @@
 # TTK4235
-Project in embedded systems
+Elevator project in embedded systems
