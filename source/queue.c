@@ -33,4 +33,6 @@ void update_queue(elevator* el){
             }
         }
     }
+    el->queue[1][0] = -1;
+    el->queue[0][3] = -1;
 }

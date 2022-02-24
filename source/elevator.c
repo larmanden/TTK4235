@@ -24,7 +24,7 @@ int elevator_get_order(elevator* el){
         for (int j = 0; j < N_FLOORS; j++){
             if(el->queue[i][j] == 1){
                 el->nextFloor = j;
-                printf("NEXTFLR: ");
+                printf("NEXTFLR:\n");
                 printf("%d", el->nextFloor);
                 return j;
             }
@@ -45,7 +45,7 @@ int order_above(elevator* el){
 }
 int order_below(elevator* el){
       for (int i = 0; i < N_BUTTONS; i++){
-        for (int j = 0; j < el->currentFloor - 1; j++){
+        for (int j = 0; j < el->currentFloor; j++){
             if (el->queue[i][j] == 1){
                 return 1;
             }
@@ -58,4 +58,15 @@ void remove_last_order(elevator* el){
     for (int i = 0; i < N_BUTTONS; i++){
         el->queue[i][el->nextFloor] = 0;
     }
+}
+
+int check_next_floor(elevator* el){
+    //Sjekke i etasjen over om noen skal samme retning som heisen går
+    if (el->current_motor_dir == DIRN_UP){
+        if (el->queue[el->current_motor_dir][el->currentFloor+1]){
+        return 1;
+    }
+    
+
+    
 }

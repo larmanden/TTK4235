@@ -5,6 +5,7 @@
 #include "driver/elevio.h"
 
 #include "fsm.h"
+#include "fsm2.h"
 #include "elevator.h"
 #include "queue.h"
 
@@ -22,5 +23,8 @@ int main(){
 
     fsm_init(&el);
     fsm_run(&el);
+    //clearQueue(&el);
+    //print_queue(&el);
+   
 }
 

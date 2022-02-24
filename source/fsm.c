@@ -15,8 +15,6 @@ void fsm_init(elevator* el){
             update_current_floor(el);
             el->state = IDLE;
     }
-   /*  printf("Current floor: \n");
-    printf("%d",el->currentFloor); */
 }
 
 
@@ -58,15 +56,10 @@ void fsm_emergency_stop(elevator* el) {
     }
     //Mulighet for å komme til IDLE
     if(!elevio_stopButton()){
-        el->state = IDLE;
-    }
-}
-
-
-void fsm_moving(elevator* el){
-    //Step 1: hente ordre
-
+        el->state = IDLE;el->queue[1][0] = -1;
+    el->queue[0][3] = -1;
     update_queue(el);
+     update_current_floor(el);
 
     if (order_above(el)){
         elevio_motorDirection(DIRN_UP);
@@ -74,9 +67,7 @@ void fsm_moving(elevator* el){
     if (order_below(el)){
         elevio_motorDirection(DIRN_DOWN);
     }
-
-
-    update_current_floor(el);
+   
     if(el->currentFloor == el->nextFloor){
         el->state = IDLE;
         remove_last_order(el);
@@ -87,10 +78,11 @@ void fsm_idle(elevator* el){
     elevio_motorDirection(DIRN_STOP);
     update_current_floor(el);
     update_queue(el);
-    int tmp = elevator_get_order(el);
-    if(tmp >= 0){
+
+    if(order_below(el) || order_above(el)){
         el->state = MOVING;
     }
+
 }
 
 

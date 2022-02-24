@@ -14,6 +14,7 @@ typedef enum {
 
 
 struct elevator{
+    MotorDirection prev_motor_dir;
     MotorDirection current_motor_dir;
     int currentFloor;
     int nextFloor;
@@ -36,3 +37,4 @@ int elevator_get_order(elevator* el);
 int order_above(elevator* el);
 int order_below(elevator* el);
 void remove_last_order(elevator* el);
+int check_next_floor(elevator* el);
