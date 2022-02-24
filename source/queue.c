@@ -11,6 +11,7 @@ void clearQueue(elevator* el){
 
 void print_queue(elevator* el){
      //Display the matrix
+     printf("\n");
     for (int i = 0; i < N_BUTTONS; i++){
         printf("|");
         for (int j = 0; j < N_FLOORS; j++){

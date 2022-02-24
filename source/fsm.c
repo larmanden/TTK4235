@@ -72,7 +72,7 @@ void fsm_emergency_stop(elevator* el) {
 
 void fsm_idle(elevator* el){
     el->current_motor_dir = DIRN_STOP;
-    elevator_update_dir(el);
+
     elevio_motorDirection(DIRN_STOP);
     update_current_floor(el);
 
@@ -82,7 +82,6 @@ void fsm_idle(elevator* el){
     if(order_below(el) || order_above(el)){
         el->state = MOVING;
     }
-
 }
 
 
