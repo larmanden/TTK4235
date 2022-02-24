@@ -9,12 +9,8 @@ void fsm_init(elevator* el){
     while(elevio_floorSensor() == -1){
         elevio_motorDirection(DIRN_DOWN);
     }
-    if(elevio_floorSensor() != -1){
-            //Elevator is in a defined floor
-            elevio_motorDirection(DIRN_STOP);
-            update_current_floor(el);
-            el->state = IDLE;
-    }
+    //Elevator is now in a defined floor
+    el->state = IDLE;
 }
 
 
@@ -75,8 +71,12 @@ void fsm_emergency_stop(elevator* el) {
 }
 
 void fsm_idle(elevator* el){
+    el->current_motor_dir = DIRN_STOP;
+    elevator_update_dir(el);
     elevio_motorDirection(DIRN_STOP);
     update_current_floor(el);
+
+    //Polling to see if there is any orders to take
     update_queue(el);
 
     if(order_below(el) || order_above(el)){
