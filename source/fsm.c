@@ -70,76 +70,48 @@ void fsm_door_open(elevator* el){
             timer_start(el);
         }
     }
-    
-    //Mulig ikke needed
     update_queue(el);
-    /* if(elevator_has_order(el)){
+    if(elevator_has_order(el)){
         el->state = MOVING;
     }
-    else{
-        el->state = IDLE;
-    } */
-
-    el->state = IDLE;
-
+    else{el->state = IDLE;}
     elevio_doorOpenLamp(0);
 }
 
-
 void fsm_moving(elevator* el){
-    //Default
-    printf("MOVING \n");
-    print_queue(el);
-    update_queue(el);
-
-    //Kontrollere at den ikke går til endestop
-    elev_limit(el);
-    
-
-    //Kontinuerlig mulighet for å stoppe på en etasje idet vi kjører forbi
+    //Generell skisse. For gitt retning: alltid ta alle som skal samme vei samt cabin. Hvis det er ingen i samme retning, finn den lengst unna og kjør dit for deretter å snu.
     int tmpflr = elevio_floorSensor();
-    if(tmpflr != -1){
-        //Fix the floorlights
-
-        elevio_floorIndicator(tmpflr);
+    if(tmpflr != -1){  
+        elevio_floorIndicator(tmpflr);      
         switch (el->current_motor_dir){
-            case DIRN_UP:
-                if(el->queue[BUTTON_HALL_UP][tmpflr] == 1  || el->queue[BUTTON_CAB][tmpflr] == 1){
-                    el->state = DOOR_OPEN;
-                }
-                else if (el->queue[BUTTON_HALL_DOWN][tmpflr] == 1 && elev_only_orders_in_opposite_dir(el, DIRN_UP) == 1){
-                    el->state = DOOR_OPEN;
-                }
-                break;
-            case DIRN_DOWN:
-                if(el->queue[BUTTON_HALL_DOWN][tmpflr] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1 ){
-                    el->state = DOOR_OPEN;
-                }
-                else if (el->queue[BUTTON_HALL_UP][tmpflr] == 1 && elev_only_orders_in_opposite_dir(el, DIRN_DOWN) == 1){
-                    el->state = DOOR_OPEN;
-                }
-                //If there is only opposite buttons, need a function
-                break;
-            case DIRN_STOP:
-                for (int i = 0; i < N_BUTTONS; i++){
-                    //Her fucker d seg muligens
-                    if(tmpflr == el->currentFloor && el->queue[i][tmpflr] == 1){
-                        el->state = DOOR_OPEN;
-                    }
-                }
-                break;
-            default:
-                printf("DEFAULT \n");
-                break;
+        case DIRN_DOWN:
+            if(el->queue[BUTTON_HALL_DOWN][el->currentFloor] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
+                el->state = DOOR_OPEN;
             }
+            break;
+        case DIRN_UP:
+            if(el->queue[BUTTON_HALL_UP][el->currentFloor] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
+                el->state = DOOR_OPEN;
+            }
+            break;
+        case DIRN_STOP:
+            //Hvis heisen kommer fra IDLE vil vi ha den innom MOVING før den går til DOOR_OPEN
+            if(el->queue[BUTTON_HALL_DOWN][tmpflr] == 1 || el->queue[BUTTON_HALL_UP][tmpflr] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
+                el->state = DOOR_OPEN;
+            }
+            break;
+        default:
+            break;
+        }
+        
+        //Mulighet for å stoppe ved entryen lengst borte.
+        if(tmpflr == elev_look_ahead(el)){
+            el->state = DOOR_OPEN;
+        }
     }
 
-
-
-    //Her har vi mulighet for å sette retning hvis vi ikke skulle stoppe
-
-    //We need to prioritize the cabin buttons
-
+    //Her skal det settes og oppdateres generell retning
+    //cmt: Denne logikken under her er muligens ikke vanntett. Teste den separat?
     switch (el->current_motor_dir){
     case DIRN_DOWN:
         if(order_below(el)){
@@ -159,14 +131,12 @@ void fsm_moving(elevator* el){
         }
         break;
     }
-   
 }
 
 
 void fsm_emergency_stop(elevator* el){
     elevator_update_dir(el, DIRN_STOP);
     clearQueue(el);
-
 
     while (elevio_stopButton()){
         printf("EMERGENCY STOP\n");
@@ -178,11 +148,10 @@ void fsm_emergency_stop(elevator* el){
             elevio_doorOpenLamp(1);
         }
     }
-
+    elevio_stopLamp(0);
+    elevio_doorOpenLamp(0); //cmt: logikken bak rundt når disse lampene skal av og på må fikses.
     if(elevio_floorSensor() != -1){
         el->state = DOOR_OPEN;
     }
-    else{el->state = IDLE;
-            elevio_stopLamp(0);
-    }
+    else{el->state = IDLE;}
 }

@@ -40,4 +40,6 @@ void remove_last_order(elevator* el);
 
 void elev_limit(elevator* el);
 void elev_update_current_floor(elevator* el);
-int elev_only_orders_in_opposite_dir(elevator* el, MotorDirection dirn);
+int elev_only_orders_in_opposite_dir(elevator* el);
+
+int elev_look_ahead(elevator* el);

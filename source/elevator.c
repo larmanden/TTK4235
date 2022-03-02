@@ -78,28 +78,47 @@ void elev_update_current_floor(elevator* el){
     }
 }
 
-int elev_only_orders_in_opposite_dir(elevator* el, MotorDirection dirn){
-    switch (dirn)
-    {
-    case DIRN_DOWN:
-        //Want to check opposite
-        for (int i = 0; i < N_FLOORS; i++){
-            if(el->queue[BUTTON_HALL_DOWN][i] == 1){
-                return 0;
-            }
-        }
-        
-        break;
-    case DIRN_UP:
-          //Want to check opposite
-        for (int i = 0; i < N_FLOORS; i++){
-            if(el->queue[BUTTON_HALL_UP][i] == 1){
-                return 0;
-            }
-        }
-        break;
-    default:
-        break;
+int elev_only_orders_in_opposite_dir(elevator* el){
+    //We dont need to check that the matrix actually has entries 
+    int btnindex = 0;
+    if(el->current_motor_dir == DIRN_DOWN){
+        btnindex = BUTTON_HALL_DOWN;
     }
+    else{btnindex = BUTTON_HALL_UP;}
+
+    for (int i = 0; i < N_FLOORS; i++){
+        if(el->queue[btnindex][i] == 1){return 0;}
+    }
+    //If the loop didnt return 0 we actually only have orders in the opposite_dir
     return 1;
+}
+
+
+
+int elev_look_ahead(elevator* el){
+    //First check if we only have entries in the opposite direction
+    int stopfloor = 0;
+    if(elev_only_orders_in_opposite_dir(el)){
+        //Now we need to find floor the furthest away
+        switch (el->current_motor_dir){
+            case DIRN_DOWN:
+                for (int i = 0; i < N_FLOORS; i++){
+                    if(el->queue[BUTTON_HALL_UP][i] == 1){
+                        stopfloor = i;
+                    }
+                }
+                break;
+            case DIRN_UP:
+                //Looping the other way
+                for (int i = N_FLOORS - 1; i >= 0; i--){
+                    if(el->queue[BUTTON_HALL_DOWN][i] == 1){
+                        stopfloor = i;
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+    return stopfloor;
 }
