@@ -1,2 +1,2 @@
-# TTK4235_func
+# TTK4235
 Elevator project in embedded systems
