@@ -1,5 +1,7 @@
 #pragma once
 #include <stdio.h>
+#include "stdlib.h"
+
 
 #include "driver/elevio.h"
 #include "queue.h"
@@ -17,7 +19,6 @@ struct elevator{
     MotorDirection prev_motor_dir;
     MotorDirection current_motor_dir;
     int currentFloor;
-    int nextFloor;
 
     int elev_timer;
     STATE state;
@@ -27,14 +28,16 @@ struct elevator{
 
 typedef struct elevator elevator;
 
+void elevator_update_dir(elevator* el, MotorDirection newdir);
 
-
-int check_obstruction(elevator* el);
-void update_current_floor(elevator* el);
-
-int elevator_get_order(elevator* el);
+int elevator_has_order(elevator* el);
 
 int order_above(elevator* el);
 int order_below(elevator* el);
+
 void remove_last_order(elevator* el);
-int check_next_floor(elevator* el);
+
+
+void elev_limit(elevator* el);
+void elev_update_current_floor(elevator* el);
+int elev_only_orders_in_opposite_dir(elevator* el, MotorDirection dirn);

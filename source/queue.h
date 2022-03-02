@@ -7,16 +7,10 @@
 
 typedef struct elevator elevator;
 
-//Removing all ordersunknown type name 'elevator'
 void clearQueue(elevator* el);
-//Polling buttons and creating orders
-
-//void updateQueue(elevator* el);
-
-
-//Debugging functions to nicely print the 4x3 matrix
 void print_queue(elevator* el);
-
+//Handles lights as well
 void update_queue(elevator* el);
+
 
 

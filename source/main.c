@@ -4,27 +4,19 @@
 #include <time.h>
 #include "driver/elevio.h"
 
+
 #include "fsm.h"
-#include "fsm2.h"
 #include "elevator.h"
 #include "queue.h"
 
-
-
+//02.03 6sec ved stopp på egen etasje problem fortsatt
 
 
 int main(){
 
-    
     elevator el = {DIRN_STOP, 0, 0, 0, IDLE};
-
-    //Denne er fackings keeeey_UAns
-    //elevio_init();
-
     fsm_init(&el);
     fsm_run(&el);
-    //clearQueue(&el);
-    //print_queue(&el);
-   
-}
+  
 
+}
