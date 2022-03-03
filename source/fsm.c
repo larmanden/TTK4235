@@ -56,7 +56,6 @@ void fsm_door_open(elevator* el){
     //Stop the elevator, ønsker ikke å ha DIRN_STOP som en forrige retning
     elevator_update_dir(el, DIRN_STOP);
     remove_last_order(el);  
-    
     elevio_doorOpenLamp(1);
 
     //Timer and obstruction implementation
@@ -69,7 +68,15 @@ void fsm_door_open(elevator* el){
             printf("OBSTRUCTION\n");
             timer_start(el);
         }
+
+        //Mulighet for å komme til EMERGENCY_STOP når dørene er åpne
+        if(elevio_stopButton()){
+            el->state =EMERGENCY_STOP;
+            return;
+        }
     }
+
+    remove_last_order(el);
     update_queue(el);
     if(elevator_has_order(el)){
         el->state = MOVING;
@@ -80,17 +87,35 @@ void fsm_door_open(elevator* el){
 
 void fsm_moving(elevator* el){
     //Generell skisse. For gitt retning: alltid ta alle som skal samme vei samt cabin. Hvis det er ingen i samme retning, finn den lengst unna og kjør dit for deretter å snu.
+    
+    //Den kan ikke gå utenfor området per nå, egt ikke nødvendig
+    //elev_limit(el);
+    printf("MOVING \n");
+    print_queue(el);
+    update_queue(el);
     int tmpflr = elevio_floorSensor();
+    printf("TMPFLR: ");
+    printf("%d", tmpflr);
+    printf("\n");
+
+    printf("MTDIR: ");
+    printf("%d", el->current_motor_dir);
+    printf("\n");
+
+    printf("EL->CUR: ");
+    printf("%d", el->currentFloor);
+    printf("\n");
+
     if(tmpflr != -1){  
         elevio_floorIndicator(tmpflr);      
         switch (el->current_motor_dir){
         case DIRN_DOWN:
-            if(el->queue[BUTTON_HALL_DOWN][el->currentFloor] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
+            if(el->queue[BUTTON_HALL_DOWN][tmpflr] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
                 el->state = DOOR_OPEN;
             }
             break;
         case DIRN_UP:
-            if(el->queue[BUTTON_HALL_UP][el->currentFloor] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
+            if(el->queue[BUTTON_HALL_UP][tmpflr] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
                 el->state = DOOR_OPEN;
             }
             break;
@@ -105,8 +130,10 @@ void fsm_moving(elevator* el){
         }
         
         //Mulighet for å stoppe ved entryen lengst borte.
-        if(tmpflr == elev_look_ahead(el)){
-            el->state = DOOR_OPEN;
+        if(elev_only_orders_in_opposite_dir(el)){
+            if(tmpflr == elev_look_ahead(el)){
+               el->state = DOOR_OPEN; 
+            }
         }
     }
 
@@ -121,7 +148,14 @@ void fsm_moving(elevator* el){
             elevator_update_dir(el, DIRN_UP);
         }
         break;
-        
+    case DIRN_STOP:
+        if(order_above(el)){
+            elevator_update_dir(el, DIRN_UP);
+        }
+        else if (order_below(el)){
+            elevator_update_dir(el, DIRN_DOWN);
+        }
+        break;
     default:    //Skal både gjelde for oppover og for i ro
         if(order_above(el)){
             elevator_update_dir(el, DIRN_UP);

@@ -18,6 +18,7 @@
 int main(){
 
     elevator el = {DIRN_STOP, 0, 0, 0, IDLE};
+    
     fsm_init(&el);
     fsm_run(&el);
   

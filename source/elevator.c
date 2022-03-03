@@ -97,28 +97,28 @@ int elev_only_orders_in_opposite_dir(elevator* el){
 
 int elev_look_ahead(elevator* el){
     //First check if we only have entries in the opposite direction
-    int stopfloor = 0;
-    if(elev_only_orders_in_opposite_dir(el)){
+    int stopfloor = -1;
         //Now we need to find floor the furthest away
-        switch (el->current_motor_dir){
-            case DIRN_DOWN:
-                for (int i = 0; i < N_FLOORS; i++){
-                    if(el->queue[BUTTON_HALL_UP][i] == 1){
-                        stopfloor = i;
-                    }
+    switch (el->current_motor_dir){
+        case DIRN_DOWN:
+            for (int i = 0; i < N_FLOORS; i++){
+                if(el->queue[BUTTON_HALL_UP][i] == 1){
+                    stopfloor = i;
+                    return stopfloor;
                 }
-                break;
-            case DIRN_UP:
-                //Looping the other way
-                for (int i = N_FLOORS - 1; i >= 0; i--){
-                    if(el->queue[BUTTON_HALL_DOWN][i] == 1){
-                        stopfloor = i;
-                    }
+            }
+            break;
+        case DIRN_UP:
+            //Looping the other way
+            for (int i = N_FLOORS - 1; i >= 0; i--){
+                if(el->queue[BUTTON_HALL_DOWN][i] == 1){
+                    stopfloor = i;
+                    return stopfloor;
                 }
-                break;
-            default:
-                break;
-        }
+            }
+            break;
+        default:
+            break;
     }
     return stopfloor;
 }
