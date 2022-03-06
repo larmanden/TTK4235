@@ -9,11 +9,6 @@
 #include "elevator.h"
 #include "queue.h"
 
-//02.03 6sec ved stopp på egen etasje problem fortsatt, dette gjelder gammel versjon. Må fortsatt sjekkes
-
-
-//Intro: Denne versjonen bruker en annen algo for å bestemme hvorvidt heisen skal stoppe og hvilken retning den skal kjøre idet den faktisk får en ordre.
-
 
 int main(){
 
@@ -21,6 +16,5 @@ int main(){
     
     fsm_init(&el);
     fsm_run(&el);
-  
-
+    
 }

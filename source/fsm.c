@@ -129,12 +129,15 @@ void fsm_moving(elevator* el){
             break;
         }
         
-        //Mulighet for å stoppe ved entryen lengst borte.
-        if(elev_only_orders_in_opposite_dir(el)){
-            if(tmpflr == elev_look_ahead(el)){
-               el->state = DOOR_OPEN; 
-            }
+
+        //Skal sørge for å stoppe ved knapper som er motsatt rettet av egen retning uavhenig av hvor mange det er i matrisen.
+        if(tmpflr == elev_look_ahead(el)){
+            el->state = DOOR_OPEN;
         }
+
+        //Vi trenger en mulighet for å stoppe på motsatt-retning knapp selvom det er en annen "samme vei" knapp som er trykket inn
+        //Mulgihet for å generalisere look_ahead()?
+
     }
 
     //Her skal det settes og oppdateres generell retning
