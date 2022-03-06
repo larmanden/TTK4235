@@ -15,7 +15,7 @@ int elevator_has_order(elevator* el){
 
 int order_above(elevator* el){
     for (int i = 0; i < N_BUTTONS; i++){
-        for (int j = el->currentFloor + 1; j < N_FLOORS; j++){
+        for (int j = el->currentFloor + 1 ; j < N_FLOORS; j++){
             if (el->queue[i][j] == 1){
                 return 1;
             }
@@ -52,7 +52,13 @@ void elevator_update_dir(elevator* el, MotorDirection newdir){
         elevio_motorDirection(el->current_motor_dir);
         return;
     } */
-    el->prev_motor_dir = el->current_motor_dir;
+    MotorDirection tmp1 = el->prev_motor_dir;
+
+    el->prev_prev_dir = tmp1;
+
+    MotorDirection tmp2 = el-> current_motor_dir;
+    el->prev_motor_dir = tmp2;
+
     el->current_motor_dir = newdir;
     //Mulig at denne burde bli kalt på i fsm for å unngå for mye dependecies
     elevio_motorDirection(el->current_motor_dir);
@@ -129,5 +135,50 @@ int elev_look_ahead(elevator* el){
             break;
     }
     return stopfloor;
+}
+
+MotorDirection elev_move_after_emergency(elevator* el){
+    switch (el->prev_prev_dir)
+    {
+    case DIRN_DOWN:
+    //We want to check both orders above and below
+        for (int i = 0; i < N_BUTTONS; i++){
+            for (int j = el->currentFloor; j < N_FLOORS; j++){
+                if(el->queue[i][j] == 1){
+
+                    return DIRN_UP;
+                }
+            }
+        }
+        for (int i = 0; i < N_BUTTONS; i++){
+            for (int j = 0; j < el->currentFloor - 1; j++){
+                if(el->queue[i][j] == 1){
+                    return DIRN_DOWN;
+                }
+            }
+        }
+        break;
+    
+    case DIRN_UP:
+         for (int i = 0; i < N_BUTTONS; i++){
+            for (int j = el->currentFloor + 1; j < N_FLOORS; j++){
+                if(el->queue[i][j] == 1){
+                    return DIRN_UP;
+                }
+            }
+        }
+        for (int i = 0; i < N_BUTTONS; i++){
+            for (int j = 0; j <= el->currentFloor; j++){
+                if(el->queue[i][j] == 1){
+                    return DIRN_DOWN;
+                }
+            }
+        }
+        break;
+    default:
+        break;
+    }
+    //If all is fucked
+    return DIRN_STOP;  
 }
 

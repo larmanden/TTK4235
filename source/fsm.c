@@ -8,15 +8,14 @@ void fsm_init(elevator* el){
     }
     //Now we are in a defined floor
     elev_update_current_floor(el);
+
+    elevator_update_dir(el, DIRN_STOP);
     el->state = IDLE;
 }
 
 void fsm_run(elevator* el){
     //Gameloopen vår
     while (1){
-    if(elevio_stopButton()){
-        el->state = EMERGENCY_STOP;
-    }
         switch (el->state)
         {
         case IDLE:
@@ -40,6 +39,10 @@ void fsm_run(elevator* el){
 
 void fsm_idle(elevator* el){
     printf("IDLE \n");
+
+    if(elevio_stopButton()){
+        el->state = EMERGENCY_STOP;
+    }
     
     elev_update_current_floor(el);
     update_queue(el);
@@ -47,10 +50,14 @@ void fsm_idle(elevator* el){
     if(elevator_has_order(el)){
         el->state = MOVING;
     }
-    elevator_update_dir(el, DIRN_STOP);
+    //elevator_update_dir(el, DIRN_STOP);
 }
 
 void fsm_door_open(elevator* el){
+
+    if(elevio_stopButton()){
+        el->state = EMERGENCY_STOP;
+    }
 
     elev_update_current_floor(el);
     elevator_update_dir(el, DIRN_STOP);
@@ -80,47 +87,50 @@ void fsm_door_open(elevator* el){
     if(elevator_has_order(el)){
         el->state = MOVING;
     }
-    else{el->state = IDLE;}
+    else{
+        el->state = IDLE;
+        //elevator_update_dir(el, DIRN_STOP);
+    }
+    
     elevio_doorOpenLamp(0);
 }
 
 void fsm_moving(elevator* el){
-    //Generell skisse. For gitt retning: alltid ta alle som skal samme vei samt cabin. Hvis det er ingen i samme retning, finn den lengst unna og kjør dit for deretter å snu.
-    
-    //Den kan ikke gå utenfor området per nå, egt ikke nødvendig
-    //elev_limit(el);
+
+    if(elevio_stopButton()){
+        el->state = EMERGENCY_STOP;
+        //Viktig at denne er her fordi den bare skal kalles en gang?
+        elevator_update_dir(el, DIRN_STOP);
+        return;
+    }
+
+
     printf("MOVING \n");
-    print_queue(el);
     update_queue(el);
+
+    elev_update_current_floor(el);
+    
     int tmpflr = elevio_floorSensor();
-    printf("TMPFLR: ");
-    printf("%d", tmpflr);
-    printf("\n");
-
-    printf("MTDIR: ");
-    printf("%d", el->current_motor_dir);
-    printf("\n");
-
-    printf("EL->CUR: ");
-    printf("%d", el->currentFloor);
-    printf("\n");
 
     if(tmpflr != -1){  
-        elevio_floorIndicator(tmpflr);      
+        elevio_floorIndicator(tmpflr);   
         switch (el->current_motor_dir){
         case DIRN_DOWN:
             if(el->queue[BUTTON_HALL_DOWN][tmpflr] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
+                elevator_update_dir(el, DIRN_STOP);
                 el->state = DOOR_OPEN;
             }
             break;
         case DIRN_UP:
             if(el->queue[BUTTON_HALL_UP][tmpflr] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
+                elevator_update_dir(el, DIRN_STOP);
                 el->state = DOOR_OPEN;
             }
             break;
         case DIRN_STOP:
             //Hvis heisen kommer fra IDLE vil vi ha den innom MOVING før den går til DOOR_OPEN
             if(el->queue[BUTTON_HALL_DOWN][tmpflr] == 1 || el->queue[BUTTON_HALL_UP][tmpflr] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
+                elevator_update_dir(el, DIRN_STOP);
                 el->state = DOOR_OPEN;
             }
             break;
@@ -132,6 +142,7 @@ void fsm_moving(elevator* el){
         //Denne er ikke vanntett, vi må ha en mulighet for å sjekke når denne skal kalles på
         //Skal sørge for å stoppe ved knapper som er motsatt rettet av egen retning uavhenig av hvor mange det er i matrisen.
         if(tmpflr == elev_look_ahead(el)){
+            elevator_update_dir(el, DIRN_STOP);
             el->state = DOOR_OPEN;
         }
 
@@ -140,8 +151,6 @@ void fsm_moving(elevator* el){
 
     }
 
-    //Her skal det settes og oppdateres generell retning
-    //cmt: Denne logikken under her er muligens ikke vanntett. Teste den separat?
     switch (el->current_motor_dir){
     case DIRN_DOWN:
         if(order_below(el)){
@@ -158,8 +167,12 @@ void fsm_moving(elevator* el){
         else if (order_below(el)){
             elevator_update_dir(el, DIRN_DOWN);
         }
+        else if(elevio_floorSensor() == -1){
+            MotorDirection newdir = elev_move_after_emergency(el);
+            elevator_update_dir(el, newdir);
+        }
         break;
-    default:    //Skal både gjelde for oppover og for i ro
+    case DIRN_UP:  
         if(order_above(el)){
             elevator_update_dir(el, DIRN_UP);
         }
@@ -172,7 +185,8 @@ void fsm_moving(elevator* el){
 
 
 void fsm_emergency_stop(elevator* el){
-    elevator_update_dir(el, DIRN_STOP);
+    /* elevator_update_dir(el, DIRN_STOP); */
+    
     clearQueue(el);
 
     while (elevio_stopButton()){
@@ -190,5 +204,7 @@ void fsm_emergency_stop(elevator* el){
     if(elevio_floorSensor() != -1){
         el->state = DOOR_OPEN;
     }
-    else{el->state = IDLE;}
+    else{
+        el->state = IDLE;
+    }
 }

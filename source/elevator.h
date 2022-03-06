@@ -17,6 +17,7 @@ typedef enum {
 
 struct elevator{
     MotorDirection prev_motor_dir;
+    MotorDirection prev_prev_dir;
     MotorDirection current_motor_dir;
     int currentFloor;
 
@@ -43,3 +44,5 @@ void elev_update_current_floor(elevator* el);
 int elev_only_orders_in_opposite_dir(elevator* el);
 
 int elev_look_ahead(elevator* el);
+
+MotorDirection elev_move_after_emergency(elevator* el);
