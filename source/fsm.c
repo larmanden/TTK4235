@@ -53,9 +53,7 @@ void fsm_idle(elevator* el){
 void fsm_door_open(elevator* el){
 
     elev_update_current_floor(el);
-    //Stop the elevator, ønsker ikke å ha DIRN_STOP som en forrige retning
     elevator_update_dir(el, DIRN_STOP);
-    remove_last_order(el);  
     elevio_doorOpenLamp(1);
 
     //Timer and obstruction implementation
@@ -64,6 +62,7 @@ void fsm_door_open(elevator* el){
     {
         printf("DOOR OPEN\n");
         update_queue(el);
+        remove_last_order(el);
         if (elevio_obstruction()){
             printf("OBSTRUCTION\n");
             timer_start(el);
@@ -130,6 +129,7 @@ void fsm_moving(elevator* el){
         }
         
 
+        //Denne er ikke vanntett, vi må ha en mulighet for å sjekke når denne skal kalles på
         //Skal sørge for å stoppe ved knapper som er motsatt rettet av egen retning uavhenig av hvor mange det er i matrisen.
         if(tmpflr == elev_look_ahead(el)){
             el->state = DOOR_OPEN;

@@ -37,6 +37,7 @@ void update_queue(elevator* el){
     el->queue[1][0] = -1;
     el->queue[0][3] = -1;
 
+    //Fiksing av ordrelys
      for (int i = 0; i < N_BUTTONS; i++){
         for (int j = 0; j < N_FLOORS; j++){
             if(el->queue[i][j] == 1){

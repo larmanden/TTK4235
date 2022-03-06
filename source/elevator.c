@@ -102,6 +102,10 @@ int elev_look_ahead(elevator* el){
     switch (el->current_motor_dir){
         case DIRN_DOWN:
             for (int i = 0; i < N_FLOORS; i++){
+                if(el->queue[BUTTON_HALL_DOWN][i] == 1){
+                    stopfloor = i; 
+                    return stopfloor;
+                }
                 if(el->queue[BUTTON_HALL_UP][i] == 1){
                     stopfloor = i;
                     return stopfloor;
@@ -111,6 +115,10 @@ int elev_look_ahead(elevator* el){
         case DIRN_UP:
             //Looping the other way
             for (int i = N_FLOORS - 1; i >= 0; i--){
+                if(el->queue[BUTTON_HALL_UP][i] == 1){
+                    stopfloor = i;
+                    return stopfloor;
+                }
                 if(el->queue[BUTTON_HALL_DOWN][i] == 1){
                     stopfloor = i;
                     return stopfloor;
