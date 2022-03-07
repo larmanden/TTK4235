@@ -113,7 +113,8 @@ void fsm_moving(elevator* el){
     int tmpflr = elevio_floorSensor();
 
     if(tmpflr != -1){  
-        elevio_floorIndicator(tmpflr);   
+        elevio_floorIndicator(tmpflr);
+        //Oppdatere currentfloor her   
         switch (el->current_motor_dir){
         case DIRN_DOWN:
             if(el->queue[BUTTON_HALL_DOWN][tmpflr] == 1 || el->queue[BUTTON_CAB][tmpflr] == 1){
