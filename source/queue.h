@@ -9,7 +9,6 @@ typedef struct elevator elevator;
 
 void clearQueue(elevator* el);
 void print_queue(elevator* el);
-//Handles lights as well
 void update_queue(elevator* el);
 
 

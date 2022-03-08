@@ -1,8 +1,8 @@
 #include "queue.h"
 void clearQueue(elevator* el){
-    for (int i = 0; i < N_BUTTONS; i++){
-        for (int j = 0; j < N_FLOORS; j++){
-            el->queue[i][j] = 0;
+    for (int btn = 0; btn < N_BUTTONS; btn++){
+        for (int floor = 0; floor < N_FLOORS; floor++){
+            el->queue[btn][floor] = 0;
         }
     }
     el->queue[1][0] = -1;
@@ -10,12 +10,11 @@ void clearQueue(elevator* el){
 }
 
 void print_queue(elevator* el){
-     //Display the matrix
      printf("\n");
-    for (int i = 0; i < N_BUTTONS; i++){
+    for (int btn = 0; btn < N_BUTTONS; btn++){
         printf("|");
-        for (int j = 0; j < N_FLOORS; j++){
-            printf("%d\t", el->queue[i][j]);
+        for (int floor = 0; floor < N_FLOORS; floor++){
+            printf("%d\t", el->queue[btn][floor]);
         }
         printf("|\n");
     }
@@ -26,25 +25,25 @@ void print_queue(elevator* el){
 
 
 void update_queue(elevator* el){
-    for (int i = 0; i < N_BUTTONS; i++){
-        for (int j = 0; j < N_FLOORS; j++){
-           int btnPrsd = elevio_callButton(j,i);
+    for (int btn = 0; btn < N_BUTTONS; btn++){
+        for (int floor = 0; floor < N_FLOORS; floor++){
+           int btnPrsd = elevio_callButton(floor,btn);
            if(btnPrsd == 1){
-               el->queue[i][j] = 1;
+               el->queue[btn][floor] = 1;
             }
         }
     }
+    //Sjekke om koden fungerer uten disse, skal være nok å bare sette de en gang
     el->queue[1][0] = -1;
     el->queue[0][3] = -1;
 
-    //Fiksing av ordrelys
-     for (int i = 0; i < N_BUTTONS; i++){
-        for (int j = 0; j < N_FLOORS; j++){
-            if(el->queue[i][j] == 1){
-                elevio_buttonLamp(j, i, 1);
+     for (int btn = 0; btn < N_BUTTONS; btn++){
+        for (int floor = 0; floor < N_FLOORS; floor++){
+            if(el->queue[btn][floor] == 1){
+                elevio_buttonLamp(floor, btn, 1);
             }
             else{
-                elevio_buttonLamp(j,i, 0);
+                elevio_buttonLamp(floor,btn, 0);
             }
         }
     }

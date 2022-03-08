@@ -2,9 +2,9 @@
 
 
 int elevator_has_order(elevator* el){
-     for (int i = 0; i < N_BUTTONS; i++){
-        for (int j = 0; j < N_FLOORS; j++){
-            if(el->queue[i][j] == 1){
+     for (int btn = 0; btn < N_BUTTONS; btn++){
+        for (int floor = 0; floor < N_FLOORS; floor++){
+            if(el->queue[btn][floor] == 1){
                 return 1;
             }
         }
@@ -14,9 +14,9 @@ int elevator_has_order(elevator* el){
 
 
 int order_above(elevator* el){
-    for (int i = 0; i < N_BUTTONS; i++){
-        for (int j = el->currentFloor + 1 ; j < N_FLOORS; j++){
-            if (el->queue[i][j] == 1){
+    for (int btn = 0; btn < N_BUTTONS; btn++){
+        for (int floor = el->currentFloor + 1 ; floor < N_FLOORS; floor++){
+            if (el->queue[btn][floor] == 1){
                 return 1;
             }
         }
@@ -24,9 +24,9 @@ int order_above(elevator* el){
     return 0;
 }
 int order_below(elevator* el){
-      for (int i = 0; i < N_BUTTONS; i++){
-        for (int j = 0; j < el->currentFloor; j++){
-            if (el->queue[i][j] == 1){
+      for (int btn = 0; btn < N_BUTTONS; btn++){
+        for (int floor = 0; floor < el->currentFloor; floor++){
+            if (el->queue[btn][floor] == 1){
                 return 1;
             }
         }
@@ -35,11 +35,10 @@ int order_below(elevator* el){
 }
 
 void remove_last_order(elevator* el){
-    //Ønsker å fjerne både cabin og den gitte retningen fra matrisen
-    for (int i = 0; i < N_BUTTONS; i++){
-        el->queue[i][el->currentFloor] = 0;
+    for (int btn = 0; btn < N_BUTTONS; btn++){
+        el->queue[btn][el->currentFloor] = 0;
     }
-    
+    //Koden bør funke uten disse her
     el->queue[1][0] = -1;
     el->queue[0][3] = -1;
     
@@ -47,11 +46,6 @@ void remove_last_order(elevator* el){
 
 
 void elevator_update_dir(elevator* el, MotorDirection newdir){
-    /* if(newdir == DIRN_STOP){
-        el->current_motor_dir = newdir;
-        elevio_motorDirection(el->current_motor_dir);
-        return;
-    } */
     MotorDirection tmp1 = el->prev_motor_dir;
 
     el->prev_prev_dir = tmp1;
@@ -64,11 +58,6 @@ void elevator_update_dir(elevator* el, MotorDirection newdir){
     elevio_motorDirection(el->current_motor_dir);
 }
 
-
-
-
-
-//Mulig shady at vi går innom idle, hvis ikke må denne implementeres som en fsm funksjon muligens
 void elev_limit(elevator* el){
     if(elevio_floorSensor() == 0 || elevio_floorSensor() == 3){
         el->state = IDLE;
@@ -76,57 +65,50 @@ void elev_limit(elevator* el){
 }
 
 void elev_update_current_floor(elevator* el){
-    //Mulig at vi et sted i koden nytter at currentfloor faktisk er -1, tror ikke d. Isåfall bruk floorsensor direkte
     int tmpflr = elevio_floorSensor();
-    //el->currentFloor = elevio_floorSensor();
     if(tmpflr != -1){
         el->currentFloor = elevio_floorSensor();
     }
 }
 
 int elev_only_orders_in_opposite_dir(elevator* el){
-    //We dont need to check that the matrix actually has entries 
     int btnindex = 0;
     if(el->current_motor_dir == DIRN_DOWN){
         btnindex = BUTTON_HALL_DOWN;
     }
     else{btnindex = BUTTON_HALL_UP;}
 
-    for (int i = 0; i < N_FLOORS; i++){
-        if(el->queue[btnindex][i] == 1){return 0;}
+    for (int floor = 0; floor < N_FLOORS; floor++){
+        if(el->queue[btnindex][floor] == 1){return 0;}
     }
-    //If the loop didnt return 0 we actually only have orders in the opposite_dir
     return 1;
 }
 
 
 
 int elev_look_ahead(elevator* el){
-    //First check if we only have entries in the opposite direction
     int stopfloor = -1;
-        //Now we need to find floor the furthest away
     switch (el->current_motor_dir){
         case DIRN_DOWN:
-            for (int i = 0; i < N_FLOORS; i++){
-                if(el->queue[BUTTON_HALL_DOWN][i] == 1){
-                    stopfloor = i; 
+            for (int floor = 0; floor < N_FLOORS; floor++){
+                if(el->queue[BUTTON_HALL_DOWN][floor] == 1){
+                    stopfloor = floor; 
                     return stopfloor;
                 }
-                if(el->queue[BUTTON_HALL_UP][i] == 1){
-                    stopfloor = i;
+                if(el->queue[BUTTON_HALL_UP][floor] == 1){
+                    stopfloor = floor;
                     return stopfloor;
                 }
             }
             break;
         case DIRN_UP:
-            //Looping the other way
-            for (int i = N_FLOORS - 1; i >= 0; i--){
-                if(el->queue[BUTTON_HALL_UP][i] == 1){
-                    stopfloor = i;
+            for (int floor = N_FLOORS - 1; floor >= 0; floor--){
+                if(el->queue[BUTTON_HALL_UP][floor] == 1){
+                    stopfloor = floor;
                     return stopfloor;
                 }
-                if(el->queue[BUTTON_HALL_DOWN][i] == 1){
-                    stopfloor = i;
+                if(el->queue[BUTTON_HALL_DOWN][floor] == 1){
+                    stopfloor = floor;
                     return stopfloor;
                 }
             }
@@ -141,18 +123,17 @@ MotorDirection elev_move_after_emergency(elevator* el){
     switch (el->prev_prev_dir)
     {
     case DIRN_DOWN:
-    //We want to check both orders above and below
-        for (int i = 0; i < N_BUTTONS; i++){
-            for (int j = el->currentFloor; j < N_FLOORS; j++){
-                if(el->queue[i][j] == 1){
+        for (int btn = 0; btn < N_BUTTONS; btn++){
+            for (int floor = el->currentFloor; floor < N_FLOORS; floor++){
+                if(el->queue[btn][floor] == 1){
 
                     return DIRN_UP;
                 }
             }
         }
-        for (int i = 0; i < N_BUTTONS; i++){
-            for (int j = 0; j < el->currentFloor - 1; j++){
-                if(el->queue[i][j] == 1){
+        for (int btn = 0; btn < N_BUTTONS; btn++){
+            for (int floor = 0; floor < el->currentFloor - 1; floor++){
+                if(el->queue[btn][floor] == 1){
                     return DIRN_DOWN;
                 }
             }
@@ -160,16 +141,16 @@ MotorDirection elev_move_after_emergency(elevator* el){
         break;
     
     case DIRN_UP:
-         for (int i = 0; i < N_BUTTONS; i++){
-            for (int j = el->currentFloor + 1; j < N_FLOORS; j++){
-                if(el->queue[i][j] == 1){
+         for (int btn = 0; btn < N_BUTTONS; btn++){
+            for (int floor = el->currentFloor + 1; floor < N_FLOORS; floor++){
+                if(el->queue[btn][floor] == 1){
                     return DIRN_UP;
                 }
             }
         }
-        for (int i = 0; i < N_BUTTONS; i++){
-            for (int j = 0; j <= el->currentFloor; j++){
-                if(el->queue[i][j] == 1){
+        for (int btn = 0; btn < N_BUTTONS; btn++){
+            for (int floor = 0; floor <= el->currentFloor; floor++){
+                if(el->queue[btn][floor] == 1){
                     return DIRN_DOWN;
                 }
             }
@@ -178,7 +159,6 @@ MotorDirection elev_move_after_emergency(elevator* el){
     default:
         break;
     }
-    //If all is fucked
     return DIRN_STOP;  
 }
 
