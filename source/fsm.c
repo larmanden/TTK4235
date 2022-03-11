@@ -53,7 +53,6 @@ void fsm_door_open(elevator* el){
     }
 
     elev_update_current_floor(el);
-    elev_update_dir(el, DIRN_STOP);
     elevio_doorOpenLamp(1);
 
     timer_start(el);
