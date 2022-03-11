@@ -1,11 +1,6 @@
 #pragma once
 
-/* #include <stdio.h>
-#include "stdlib.h"
-#include <unistd.h> */
-
 #include "timer.h"
-#include "queue.h"
 #include "elevator.h"
 
 

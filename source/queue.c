@@ -23,7 +23,6 @@ void queue_print(int queue[N_BUTTONS][N_FLOORS]){
     printf("\n");
 }
 
-
 void queue_update(int queue[N_BUTTONS][N_FLOORS]){
     for (int btn = 0; btn < N_BUTTONS; btn++){
         for (int floor = 0; floor < N_FLOORS; floor++){

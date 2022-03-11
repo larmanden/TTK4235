@@ -1,12 +1,12 @@
 #include "elevator.h"
 
-void elevator_update_dir(elevator* el, MotorDirection newdir){
+void elev_update_dir(elevator* el, MotorDirection newdir){
     el->prev_motor_dir = el->current_motor_dir;
     el->current_motor_dir = newdir;
     elevio_motorDirection(el->current_motor_dir);
 }
 
-int elevator_has_order(elevator* el){
+int elev_has_order(elevator* el){
      for (int btn = 0; btn < N_BUTTONS; btn++){
         for (int floor = 0; floor < N_FLOORS; floor++){
             if(el->queue[btn][floor] == 1){
@@ -16,7 +16,6 @@ int elevator_has_order(elevator* el){
     }
     return 0;
 }
-
 
 int elev_order_above(elevator* el){
     for (int btn = 0; btn < N_BUTTONS; btn++){
@@ -28,6 +27,7 @@ int elev_order_above(elevator* el){
     }
     return 0;
 }
+
 int elev_order_below(elevator* el){
       for (int btn = 0; btn < N_BUTTONS; btn++){
         for (int floor = 0; floor < el->current_floor; floor++){
@@ -42,35 +42,18 @@ int elev_order_below(elevator* el){
 void elev_remove_last_order(elevator* el){
     for (int btn = 0; btn < N_BUTTONS; btn++){
         el->queue[btn][el->current_floor] = 0;
-    }    
+    }
+    //Security measure since these buttons dont exist
+    el->queue[1][0] = -1;
+    el->queue[0][3] = -1;  
 }
 
-
-
-
-
-
 void elev_update_current_floor(elevator* el){
-    int tmpflr = elevio_floorSensor();
-    if(tmpflr != -1){
+    int tempfloor = elevio_floorSensor();
+    if(tempfloor != -1){
         el->current_floor = elevio_floorSensor();
     }
 }
-
-int elev_only_orders_in_opposite_dir(elevator* el){
-    int btnindex = 0;
-    if(el->current_motor_dir == DIRN_DOWN){
-        btnindex = BUTTON_HALL_DOWN;
-    }
-    else{btnindex = BUTTON_HALL_UP;}
-
-    for (int floor = 0; floor < N_FLOORS; floor++){
-        if(el->queue[btnindex][floor] == 1){return 0;}
-    }
-    return 1;
-}
-
-
 
 int elev_look_ahead(elevator* el){
     int stopfloor = -1;
@@ -145,7 +128,6 @@ MotorDirection elev_move_after_emergency(elevator* el){
     //Default
     return DIRN_STOP;
 }
-
 
 void elev_btnlights_update(int queue[N_BUTTONS][N_FLOORS]){
      for (int btn = 0; btn < N_BUTTONS; btn++){

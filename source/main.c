@@ -4,14 +4,7 @@
 #include <time.h>
 #include "driver/elevio.h"
 
-//Egne filer
 #include "fsm.h"
-#include "elevator.h"
-#include "queue.h"
-
-
-//Bug in emergency stop after discarding double previous dir. Swapping between up and down after each emergency. Explicit it can 
-
 
 int main(){
 

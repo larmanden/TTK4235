@@ -3,6 +3,7 @@
     "files.associations": {
         "elevator.h": "c",
         "elevio.h": "c",
-        "queue.h": "c"
+        "queue.h": "c",
+        "fsm.h": "c"
     }
 }
