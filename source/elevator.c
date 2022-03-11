@@ -1,5 +1,10 @@
 #include "elevator.h"
 
+void elevator_update_dir(elevator* el, MotorDirection newdir){
+    el->prev_motor_dir = el->current_motor_dir;
+    el->current_motor_dir = newdir;
+    elevio_motorDirection(el->current_motor_dir);
+}
 
 int elevator_has_order(elevator* el){
      for (int btn = 0; btn < N_BUTTONS; btn++){
@@ -13,9 +18,9 @@ int elevator_has_order(elevator* el){
 }
 
 
-int order_above(elevator* el){
+int elev_order_above(elevator* el){
     for (int btn = 0; btn < N_BUTTONS; btn++){
-        for (int floor = el->currentFloor + 1 ; floor < N_FLOORS; floor++){
+        for (int floor = el->current_floor + 1 ; floor < N_FLOORS; floor++){
             if (el->queue[btn][floor] == 1){
                 return 1;
             }
@@ -23,9 +28,9 @@ int order_above(elevator* el){
     }
     return 0;
 }
-int order_below(elevator* el){
+int elev_order_below(elevator* el){
       for (int btn = 0; btn < N_BUTTONS; btn++){
-        for (int floor = 0; floor < el->currentFloor; floor++){
+        for (int floor = 0; floor < el->current_floor; floor++){
             if (el->queue[btn][floor] == 1){
                 return 1;
             }
@@ -34,40 +39,21 @@ int order_below(elevator* el){
     return 0;
 }
 
-void remove_last_order(elevator* el){
+void elev_remove_last_order(elevator* el){
     for (int btn = 0; btn < N_BUTTONS; btn++){
-        el->queue[btn][el->currentFloor] = 0;
-    }
-    //Koden bør funke uten disse her
-    el->queue[1][0] = -1;
-    el->queue[0][3] = -1;
-    
+        el->queue[btn][el->current_floor] = 0;
+    }    
 }
 
 
-void elevator_update_dir(elevator* el, MotorDirection newdir){
-    MotorDirection tmp1 = el->prev_motor_dir;
 
-    el->prev_prev_dir = tmp1;
 
-    MotorDirection tmp2 = el-> current_motor_dir;
-    el->prev_motor_dir = tmp2;
 
-    el->current_motor_dir = newdir;
-    //Mulig at denne burde bli kalt på i fsm for å unngå for mye dependecies
-    elevio_motorDirection(el->current_motor_dir);
-}
-
-void elev_limit(elevator* el){
-    if(elevio_floorSensor() == 0 || elevio_floorSensor() == 3){
-        el->state = IDLE;
-    }
-}
 
 void elev_update_current_floor(elevator* el){
     int tmpflr = elevio_floorSensor();
     if(tmpflr != -1){
-        el->currentFloor = elevio_floorSensor();
+        el->current_floor = elevio_floorSensor();
     }
 }
 
@@ -120,45 +106,56 @@ int elev_look_ahead(elevator* el){
 }
 
 MotorDirection elev_move_after_emergency(elevator* el){
-    switch (el->prev_prev_dir)
+    //Loop variables
+    int startfloor_loop_up = 0;
+    int endfloor_loop_up = N_FLOORS;
+
+    int startfloor_loop_down = 0;
+    int endfloor_loop_down = 0;
+
+    //Deciding boundaries for the loops
+    switch (el->prev_motor_dir)
     {
     case DIRN_DOWN:
-        for (int btn = 0; btn < N_BUTTONS; btn++){
-            for (int floor = el->currentFloor; floor < N_FLOORS; floor++){
-                if(el->queue[btn][floor] == 1){
-
-                    return DIRN_UP;
-                }
-            }
-        }
-        for (int btn = 0; btn < N_BUTTONS; btn++){
-            for (int floor = 0; floor < el->currentFloor - 1; floor++){
-                if(el->queue[btn][floor] == 1){
-                    return DIRN_DOWN;
-                }
-            }
-        }
+        startfloor_loop_up = el->current_floor;
+        endfloor_loop_down = el->current_floor -1;
         break;
-    
     case DIRN_UP:
-         for (int btn = 0; btn < N_BUTTONS; btn++){
-            for (int floor = el->currentFloor + 1; floor < N_FLOORS; floor++){
-                if(el->queue[btn][floor] == 1){
-                    return DIRN_UP;
-                }
-            }
-        }
-        for (int btn = 0; btn < N_BUTTONS; btn++){
-            for (int floor = 0; floor <= el->currentFloor; floor++){
-                if(el->queue[btn][floor] == 1){
-                    return DIRN_DOWN;
-                }
-            }
-        }
+        startfloor_loop_up = el->current_floor + 1;
+        endfloor_loop_down = el->current_floor + 1;
         break;
     default:
         break;
     }
-    return DIRN_STOP;  
+
+    for (int btn = 0; btn < N_BUTTONS; btn++){
+        //Deciding wether to go upwards
+        for(int floor = startfloor_loop_up; floor < endfloor_loop_up; floor++){
+            if(el->queue[btn][floor] == 1){
+                return DIRN_UP;
+            }
+        }
+        //Deciding wether to go downwards
+        for (int floor = startfloor_loop_down; floor < endfloor_loop_down; floor++){
+            if(el->queue[btn][floor] == 1){
+                return DIRN_DOWN;
+            }
+        }
+    }
+    //Default
+    return DIRN_STOP;
 }
 
+
+void elev_btnlights_update(int queue[N_BUTTONS][N_FLOORS]){
+     for (int btn = 0; btn < N_BUTTONS; btn++){
+        for (int floor = 0; floor < N_FLOORS; floor++){
+            if(queue[btn][floor] == 1){
+                elevio_buttonLamp(floor, btn, 1);
+            }
+            else{
+                elevio_buttonLamp(floor,btn, 0);
+            }
+        }
+    }
+}

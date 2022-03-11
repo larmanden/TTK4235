@@ -1,12 +1,13 @@
 #pragma once
-#include "elevator.h"
-#include <stdio.h>
+
+/* #include <stdio.h>
 #include "stdlib.h"
-#include <unistd.h>
+#include <unistd.h> */
+
 #include "timer.h"
-
-
 #include "queue.h"
+#include "elevator.h"
+
 
 void fsm_init(elevator* el);
 void fsm_run(elevator* el);

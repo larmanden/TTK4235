@@ -10,14 +10,16 @@
 #include "queue.h"
 
 
+//Bug in emergency stop after discarding double previous dir. Swapping between up and down after each emergency. Explicit it can 
+
+
 int main(){
 
     elevator el;
     el.current_motor_dir = DIRN_STOP;
     el.prev_motor_dir = DIRN_STOP;
-    el.prev_prev_dir = DIRN_STOP;
-    el.currentFloor = 0;
-    el.elev_timer = 0;
+    el.current_floor = 0;
+    el.timer = 0;
     el.state = IDLE;
 
     fsm_init(&el);

@@ -7,9 +7,7 @@
 
 typedef struct elevator elevator;
 
-void clearQueue(elevator* el);
-void print_queue(elevator* el);
-void update_queue(elevator* el);
-
-
+void queue_clear(int queue[N_BUTTONS][N_FLOORS]);
+void queue_print(int queue[N_BUTTONS][N_FLOORS]);
+void queue_update(int queue[N_BUTTONS][N_FLOORS]);
 

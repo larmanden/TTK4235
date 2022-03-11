@@ -9,6 +9,8 @@ void fsm_init(elevator* el){
     elev_update_current_floor(el);
     elevator_update_dir(el, DIRN_STOP);
     el->state = IDLE;
+
+    queue_clear(el->queue);
 }
 
 void fsm_run(elevator* el){
@@ -42,7 +44,9 @@ void fsm_idle(elevator* el){
     }
     
     elev_update_current_floor(el);
-    update_queue(el);
+    queue_update(el->queue);
+    elev_btnlights_update(el->queue);
+
     if(elevator_has_order(el)){
         el->state = MOVING;
     }
@@ -62,8 +66,10 @@ void fsm_door_open(elevator* el){
     while (!times_up(el))
     {
         printf("DOOR OPEN\n");
-        update_queue(el);
-        remove_last_order(el);
+        queue_update(el->queue);
+        elev_btnlights_update(el->queue);
+
+        elev_remove_last_order(el);
         if (elevio_obstruction()){
             printf("OBSTRUCTION\n");
             timer_start(el);
@@ -74,8 +80,10 @@ void fsm_door_open(elevator* el){
         }
     }
 
-    remove_last_order(el);
-    update_queue(el);
+    elev_remove_last_order(el);
+    queue_update(el->queue);
+    elev_btnlights_update(el->queue);
+
     if(elevator_has_order(el)){
         el->state = MOVING;
     }
@@ -96,7 +104,10 @@ void fsm_moving(elevator* el){
 
 
     printf("MOVING \n");
-    update_queue(el);
+    queue_print(el->queue);
+    queue_update(el->queue);
+    elev_btnlights_update(el->queue);
+
 
     elev_update_current_floor(el);
     
@@ -136,18 +147,18 @@ void fsm_moving(elevator* el){
 
     switch (el->current_motor_dir){
     case DIRN_DOWN:
-        if(order_below(el)){
+        if(elev_order_below(el)){
             elevator_update_dir(el, DIRN_DOWN);
         }
-        else if (order_above(el)){
+        else if (elev_order_above(el)){
             elevator_update_dir(el, DIRN_UP);
         }
         break;
     case DIRN_STOP:
-        if(order_above(el)){
+        if(elev_order_above(el)){
             elevator_update_dir(el, DIRN_UP);
         }
-        else if (order_below(el)){
+        else if (elev_order_below(el)){
             elevator_update_dir(el, DIRN_DOWN);
         }
         else if(elevio_floorSensor() == -1){
@@ -156,10 +167,10 @@ void fsm_moving(elevator* el){
         }
         break;
     case DIRN_UP:  
-        if(order_above(el)){
+        if(elev_order_above(el)){
             elevator_update_dir(el, DIRN_UP);
         }
-        else if (order_below(el)){
+        else if (elev_order_below(el)){
             elevator_update_dir(el, DIRN_DOWN);
         }
         break;
@@ -169,7 +180,7 @@ void fsm_moving(elevator* el){
 
 void fsm_emergency_stop(elevator* el){
     
-    clearQueue(el);
+    queue_clear(el->queue);
 
     while (elevio_stopButton()){
         printf("EMERGENCY STOP\n");
