@@ -1,0 +1,42 @@
+\hypertarget{queue_8c_source}{}\doxysection{queue.\+c}
+\label{queue_8c_source}\index{source/queue.c@{source/queue.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{queue_8h}{queue.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00002}\mbox{\hyperlink{queue_8h_a2810471551d169d9a62e5b4efe64e8ed}{00002}} \textcolor{keywordtype}{void} \mbox{\hyperlink{queue_8h_a2810471551d169d9a62e5b4efe64e8ed}{queue\_clear}}(\textcolor{keywordtype}{int} queue[N\_BUTTONS][N\_FLOORS])\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00003}00003     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00004}00004         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = 0; floor < N\_FLOORS; floor++)\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00005}00005             queue[btn][floor] = 0;}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00006}00006         \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00007}00007     \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00008}00008     \textcolor{comment}{//Security measure since these buttons dont exist}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00009}00009     queue[1][0] = -\/1;}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00010}00010     queue[0][3] = -\/1;}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00011}00011 \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00013}\mbox{\hyperlink{queue_8h_afc3373a34448c08f6f0038bc0e6ea4df}{00013}} \textcolor{keywordtype}{void} \mbox{\hyperlink{queue_8h_afc3373a34448c08f6f0038bc0e6ea4df}{queue\_print}}(\textcolor{keywordtype}{int} queue[N\_BUTTONS][N\_FLOORS])\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00014}00014      printf(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00015}00015     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00016}00016         printf(\textcolor{stringliteral}{"{}|"{}});}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00017}00017         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = 0; floor < N\_FLOORS; floor++)\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00018}00018             printf(\textcolor{stringliteral}{"{}\%d\(\backslash\)t"{}}, queue[btn][floor]);}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00019}00019         \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00020}00020         printf(\textcolor{stringliteral}{"{}|\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00021}00021     \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00022}00022     printf(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00023}00023     printf(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00024}00024 \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00026}\mbox{\hyperlink{queue_8h_aded032474aaa38073d779f3572e88d2e}{00026}} \textcolor{keywordtype}{void} \mbox{\hyperlink{queue_8h_aded032474aaa38073d779f3572e88d2e}{queue\_update}}(\textcolor{keywordtype}{int} queue[N\_BUTTONS][N\_FLOORS])\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00027}00027     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00028}00028         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = 0; floor < N\_FLOORS; floor++)\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00029}00029            \textcolor{keywordtype}{int} btnPrsd = \mbox{\hyperlink{elevio_8h_a2485d7d293f03756a852ee1f796b9e1f}{elevio\_callButton}}(floor,btn);}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00030}00030            \textcolor{keywordflow}{if}(btnPrsd == 1)\{}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00031}00031                queue[btn][floor] = 1;}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00032}00032             \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00033}00033         \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00034}00034     \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00035}00035 \}}
+\DoxyCodeLine{\Hypertarget{queue_8c_source_l00036}00036 }
+
+\end{DoxyCode}

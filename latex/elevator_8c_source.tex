@@ -1,0 +1,149 @@
+\hypertarget{elevator_8c_source}{}\doxysection{elevator.\+c}
+\label{elevator_8c_source}\index{source/elevator.c@{source/elevator.c}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00001}00001 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{elevator_8h}{elevator.h}}"{}}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00003}\mbox{\hyperlink{elevator_8h_ae01d272e867656689ef70593f07171cc}{00003}} \textcolor{keywordtype}{void} \mbox{\hyperlink{elevator_8h_ae01d272e867656689ef70593f07171cc}{elevator\_update\_dir}}(\mbox{\hyperlink{structelevator}{elevator}}* el, \mbox{\hyperlink{elevio_8h_ab0dd3595d7049b92115a766f0ea6f7e0}{MotorDirection}} newdir)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00004}00004     el-\/>prev\_motor\_dir = el-\/>current\_motor\_dir;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00005}00005     el-\/>current\_motor\_dir = newdir;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00006}00006     \mbox{\hyperlink{elevio_8h_ab2e6dcf199387c1dd6f78e2bf6fff56e}{elevio\_motorDirection}}(el-\/>current\_motor\_dir);}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00007}00007 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00009}\mbox{\hyperlink{elevator_8h_a095207fdf1c2f366519631c7700134b8}{00009}} \textcolor{keywordtype}{int} \mbox{\hyperlink{elevator_8h_a095207fdf1c2f366519631c7700134b8}{elevator\_has\_order}}(\mbox{\hyperlink{structelevator}{elevator}}* el)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00010}00010      \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00011}00011         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = 0; floor < N\_FLOORS; floor++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00012}00012             \textcolor{keywordflow}{if}(el-\/>queue[btn][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00013}00013                 \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00014}00014             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00015}00015         \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00016}00016     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00017}00017     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00018}00018 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00020}\mbox{\hyperlink{elevator_8h_abf36980c19008ba8b63db10c2bd10ad5}{00020}} \textcolor{keywordtype}{int} \mbox{\hyperlink{elevator_8h_abf36980c19008ba8b63db10c2bd10ad5}{elevator\_order\_above}}(\mbox{\hyperlink{structelevator}{elevator}}* el)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00021}00021     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00022}00022         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = el-\/>current\_floor + 1 ; floor < N\_FLOORS; floor++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00023}00023             \textcolor{keywordflow}{if} (el-\/>queue[btn][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00024}00024                 \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00025}00025             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00026}00026         \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00027}00027     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00028}00028     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00029}00029 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00031}\mbox{\hyperlink{elevator_8h_a08b54bc0d1a9a0f89753528c2d4f6bec}{00031}} \textcolor{keywordtype}{int} \mbox{\hyperlink{elevator_8h_a08b54bc0d1a9a0f89753528c2d4f6bec}{elevator\_order\_below}}(\mbox{\hyperlink{structelevator}{elevator}}* el)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00032}00032       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00033}00033         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = 0; floor < el-\/>current\_floor; floor++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00034}00034             \textcolor{keywordflow}{if} (el-\/>queue[btn][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00035}00035                 \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00036}00036             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00037}00037         \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00038}00038     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00039}00039     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00040}00040 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00042}\mbox{\hyperlink{elevator_8h_a50e8c72fb7409c79214ebc8384bf8486}{00042}} \textcolor{keywordtype}{void} \mbox{\hyperlink{elevator_8h_a50e8c72fb7409c79214ebc8384bf8486}{elevator\_remove\_last\_order}}(\mbox{\hyperlink{structelevator}{elevator}}* el)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00043}00043     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00044}00044         el-\/>queue[btn][el-\/>current\_floor] = 0;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00045}00045     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00046}00046     \textcolor{comment}{//Security measure since these buttons dont exist}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00047}00047     el-\/>queue[1][0] = -\/1;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00048}00048     el-\/>queue[0][3] = -\/1;  }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00049}00049 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00051}\mbox{\hyperlink{elevator_8h_a4b4fae8276af86438b8db02397ecb8be}{00051}} \textcolor{keywordtype}{void} \mbox{\hyperlink{elevator_8h_a4b4fae8276af86438b8db02397ecb8be}{elevator\_update\_current\_floor}}(\mbox{\hyperlink{structelevator}{elevator}}* el)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00052}00052     \textcolor{keywordtype}{int} tempfloor = \mbox{\hyperlink{elevio_8h_a6c30a3c0241ebf37a9014679e1bf288d}{elevio\_floorSensor}}();}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00053}00053     \textcolor{keywordflow}{if}(tempfloor != -\/1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00054}00054         el-\/>current\_floor = \mbox{\hyperlink{elevio_8h_a6c30a3c0241ebf37a9014679e1bf288d}{elevio\_floorSensor}}();}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00055}00055     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00056}00056 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00058}\mbox{\hyperlink{elevator_8h_a68b8c3b2cfb899521d84e541944a6dcf}{00058}} \textcolor{keywordtype}{int} \mbox{\hyperlink{elevator_8h_a68b8c3b2cfb899521d84e541944a6dcf}{elevator\_look\_ahead}}(\mbox{\hyperlink{structelevator}{elevator}}* el)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00059}00059     \textcolor{keywordtype}{int} stopfloor = -\/1;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00060}00060     \textcolor{keywordflow}{switch} (el-\/>current\_motor\_dir)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00061}00061         \textcolor{keywordflow}{case} DIRN\_DOWN:}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00062}00062             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = 0; floor < N\_FLOORS; floor++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00063}00063                 \textcolor{keywordflow}{if}(el-\/>queue[BUTTON\_HALL\_DOWN][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00064}00064                     stopfloor = floor; }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00065}00065                     \textcolor{keywordflow}{return} stopfloor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00066}00066                 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00067}00067                 \textcolor{keywordflow}{if}(el-\/>queue[BUTTON\_HALL\_UP][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00068}00068                     stopfloor = floor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00069}00069                     \textcolor{keywordflow}{return} stopfloor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00070}00070                 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00071}00071             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00072}00072             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00073}00073         \textcolor{keywordflow}{case} DIRN\_UP:}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00074}00074             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = N\_FLOORS -\/ 1; floor >= 0; floor-\/-\/)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00075}00075                 \textcolor{keywordflow}{if}(el-\/>queue[BUTTON\_HALL\_UP][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00076}00076                     stopfloor = floor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00077}00077                     \textcolor{keywordflow}{return} stopfloor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00078}00078                 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00079}00079                 \textcolor{keywordflow}{if}(el-\/>queue[BUTTON\_HALL\_DOWN][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00080}00080                     stopfloor = floor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00081}00081                     \textcolor{keywordflow}{return} stopfloor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00082}00082                 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00083}00083             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00084}00084             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00085}00085         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00086}00086             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00087}00087     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00088}00088     \textcolor{keywordflow}{return} stopfloor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00089}00089 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00091}\mbox{\hyperlink{elevator_8h_a643716fc57bfdeb7176c28171071a9ee}{00091}} \mbox{\hyperlink{elevio_8h_ab0dd3595d7049b92115a766f0ea6f7e0}{MotorDirection}} \mbox{\hyperlink{elevator_8h_a643716fc57bfdeb7176c28171071a9ee}{elevator\_move\_after\_emergency}}(\mbox{\hyperlink{structelevator}{elevator}}* el)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00092}00092     \textcolor{comment}{//Loop variables}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00093}00093     \textcolor{keywordtype}{int} startfloor\_loop\_up = 0;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00094}00094     \textcolor{keywordtype}{int} endfloor\_loop\_up = N\_FLOORS;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00096}00096     \textcolor{keywordtype}{int} startfloor\_loop\_down = 0;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00097}00097     \textcolor{keywordtype}{int} endfloor\_loop\_down = 0;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00099}00099     \textcolor{comment}{//Deciding boundaries for the loops}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00100}00100     \textcolor{keywordflow}{switch} (el-\/>prev\_motor\_dir)}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00101}00101     \{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00102}00102     \textcolor{keywordflow}{case} DIRN\_DOWN:}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00103}00103         startfloor\_loop\_up = el-\/>current\_floor;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00104}00104         endfloor\_loop\_down = el-\/>current\_floor -\/1;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00105}00105         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00106}00106     \textcolor{keywordflow}{case} DIRN\_UP:}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00107}00107         startfloor\_loop\_up = el-\/>current\_floor + 1;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00108}00108         endfloor\_loop\_down = el-\/>current\_floor + 1;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00109}00109         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00110}00110     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00111}00111         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00112}00112     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00113}00113 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00114}00114     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00115}00115         \textcolor{comment}{//Deciding wether to go upwards}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00116}00116         \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} floor = startfloor\_loop\_up; floor < endfloor\_loop\_up; floor++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00117}00117             \textcolor{keywordflow}{if}(el-\/>queue[btn][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00118}00118                 \textcolor{keywordflow}{return} DIRN\_UP;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00119}00119             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00120}00120         \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00121}00121         \textcolor{comment}{//Deciding wether to go downwards}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00122}00122         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = startfloor\_loop\_down; floor < endfloor\_loop\_down; floor++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00123}00123             \textcolor{keywordflow}{if}(el-\/>queue[btn][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00124}00124                 \textcolor{keywordflow}{return} DIRN\_DOWN;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00125}00125             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00126}00126         \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00127}00127     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00128}00128     \textcolor{comment}{//Default}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00129}00129     \textcolor{keywordflow}{return} DIRN\_STOP;}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00130}00130 \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00131}00131 }
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00132}\mbox{\hyperlink{elevator_8h_a62cd9823a953facf6213ce0e16d40dce}{00132}} \textcolor{keywordtype}{void} \mbox{\hyperlink{elevator_8h_a62cd9823a953facf6213ce0e16d40dce}{elevator\_btnlights\_update}}(\textcolor{keywordtype}{int} queue[N\_BUTTONS][N\_FLOORS])\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00133}00133      \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} btn = 0; btn < N\_BUTTONS; btn++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00134}00134         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} floor = 0; floor < N\_FLOORS; floor++)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00135}00135             \textcolor{keywordflow}{if}(queue[btn][floor] == 1)\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00136}00136                 \mbox{\hyperlink{elevio_8h_a182079eb4c29f71ff3b5049a2fd082a3}{elevio\_buttonLamp}}(floor, btn, 1);}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00137}00137             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00138}00138             \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00139}00139                 \mbox{\hyperlink{elevio_8h_a182079eb4c29f71ff3b5049a2fd082a3}{elevio\_buttonLamp}}(floor,btn, 0);}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00140}00140             \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00141}00141         \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00142}00142     \}}
+\DoxyCodeLine{\Hypertarget{elevator_8c_source_l00143}00143 \}}
+
+\end{DoxyCode}

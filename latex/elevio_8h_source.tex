@@ -1,0 +1,44 @@
+\hypertarget{elevio_8h_source}{}\doxysection{elevio.\+h}
+\label{elevio_8h_source}\index{source/driver/elevio.h@{source/driver/elevio.h}}
+\mbox{\hyperlink{elevio_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00001}00001 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00011}00011 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00012}00012 \textcolor{preprocessor}{\#define N\_FLOORS 4}}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00018}\mbox{\hyperlink{elevio_8h_ab0dd3595d7049b92115a766f0ea6f7e0}{00018}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{ }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00019}00019     DIRN\_DOWN   = -\/1,}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00020}00020     DIRN\_STOP   = 0,}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00021}00021     DIRN\_UP     = 1}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00022}00022 \} \mbox{\hyperlink{elevio_8h_ab0dd3595d7049b92115a766f0ea6f7e0}{MotorDirection}};}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00025}00025 \textcolor{preprocessor}{\#define N\_BUTTONS 3}}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00030}\mbox{\hyperlink{elevio_8h_ae2d5c50fae96a83cc4f5974af78e6943}{00030}} \textcolor{keyword}{typedef} \textcolor{keyword}{enum} \{ }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00031}00031     BUTTON\_HALL\_UP      = 0,}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00032}00032     BUTTON\_HALL\_DOWN    = 1,}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00033}00033     BUTTON\_CAB          = 2}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00034}00034 \} \mbox{\hyperlink{elevio_8h_ae2d5c50fae96a83cc4f5974af78e6943}{ButtonType}};}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00040}00040 \textcolor{keywordtype}{void} \mbox{\hyperlink{elevio_8h_acec5e6d14134b881216887fe15aca830}{elevio\_init}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00047}00047 \textcolor{keywordtype}{void} \mbox{\hyperlink{elevio_8h_ab2e6dcf199387c1dd6f78e2bf6fff56e}{elevio\_motorDirection}}(\mbox{\hyperlink{elevio_8h_ab0dd3595d7049b92115a766f0ea6f7e0}{MotorDirection}} dirn);}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00056}00056 \textcolor{keywordtype}{void} \mbox{\hyperlink{elevio_8h_a182079eb4c29f71ff3b5049a2fd082a3}{elevio\_buttonLamp}}(\textcolor{keywordtype}{int} floor, \mbox{\hyperlink{elevio_8h_ae2d5c50fae96a83cc4f5974af78e6943}{ButtonType}} button, \textcolor{keywordtype}{int} value);}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00063}00063 \textcolor{keywordtype}{void} \mbox{\hyperlink{elevio_8h_a184a3b9bd68d9f38ada735288059b823}{elevio\_floorIndicator}}(\textcolor{keywordtype}{int} floor);}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00070}00070 \textcolor{keywordtype}{void} \mbox{\hyperlink{elevio_8h_a7784247f816e8beee3a0538f070d9357}{elevio\_doorOpenLamp}}(\textcolor{keywordtype}{int} value);}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00077}00077 \textcolor{keywordtype}{void} \mbox{\hyperlink{elevio_8h_ac0411a180087d6ac13a3d97eda809ba0}{elevio\_stopLamp}}(\textcolor{keywordtype}{int} value);}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00086}00086 \textcolor{keywordtype}{int} \mbox{\hyperlink{elevio_8h_a2485d7d293f03756a852ee1f796b9e1f}{elevio\_callButton}}(\textcolor{keywordtype}{int} floor, \mbox{\hyperlink{elevio_8h_ae2d5c50fae96a83cc4f5974af78e6943}{ButtonType}} button);}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00093}00093 \textcolor{keywordtype}{int} \mbox{\hyperlink{elevio_8h_a6c30a3c0241ebf37a9014679e1bf288d}{elevio\_floorSensor}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00100}00100 \textcolor{keywordtype}{int} \mbox{\hyperlink{elevio_8h_a73cf5844bdae806dc8d0afa3e0edab70}{elevio\_stopButton}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00107}00107 \textcolor{keywordtype}{int} \mbox{\hyperlink{elevio_8h_a96c87bf2164a6aa64d116f6137b8ee78}{elevio\_obstruction}}(\textcolor{keywordtype}{void});}
+\DoxyCodeLine{\Hypertarget{elevio_8h_source_l00108}00108 }
+
+\end{DoxyCode}

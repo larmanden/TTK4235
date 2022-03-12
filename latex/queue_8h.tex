@@ -1,0 +1,101 @@
+\hypertarget{queue_8h}{}\doxysection{source/queue.h File Reference}
+\label{queue_8h}\index{source/queue.h@{source/queue.h}}
+
+
+Functions for the elevators queue system. The queue is defined as a 3x4 matrix.  
+
+
+{\ttfamily \#include \char`\"{}driver/elevio.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}stdlib.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}elevator.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{queue_8h_a2810471551d169d9a62e5b4efe64e8ed}{queue\+\_\+clear}} (int queue\mbox{[}N\+\_\+\+BUTTONS\mbox{]}\mbox{[}N\+\_\+\+FLOORS\mbox{]})
+\begin{DoxyCompactList}\small\item\em Clears the queue by setting all entries in the matrix to 0. Entries corresponding to buttons that doesn\textquotesingle{}t exist is set to -\/1. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{queue_8h_afc3373a34448c08f6f0038bc0e6ea4df}{queue\+\_\+print}} (int queue\mbox{[}N\+\_\+\+BUTTONS\mbox{]}\mbox{[}N\+\_\+\+FLOORS\mbox{]})
+\begin{DoxyCompactList}\small\item\em Prints the queue to terminal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{queue_8h_aded032474aaa38073d779f3572e88d2e}{queue\+\_\+update}} (int queue\mbox{[}N\+\_\+\+BUTTONS\mbox{]}\mbox{[}N\+\_\+\+FLOORS\mbox{]})
+\begin{DoxyCompactList}\small\item\em Updates entries in the queue if the given button is pressed on the panel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Functions for the elevators queue system. The queue is defined as a 3x4 matrix. 
+
+\begin{DoxyAuthor}{Author}
+your name (\href{mailto:you@domain.com}{\texttt{ you@domain.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/03-\/11
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{queue_8h_source}{queue.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{queue_8h_a2810471551d169d9a62e5b4efe64e8ed}\label{queue_8h_a2810471551d169d9a62e5b4efe64e8ed}} 
+\index{queue.h@{queue.h}!queue\_clear@{queue\_clear}}
+\index{queue\_clear@{queue\_clear}!queue.h@{queue.h}}
+\doxysubsubsection{\texorpdfstring{queue\_clear()}{queue\_clear()}}
+{\footnotesize\ttfamily void queue\+\_\+clear (\begin{DoxyParamCaption}\item[{int}]{queue\mbox{[}\+N\+\_\+\+BUTTONS\mbox{]}\mbox{[}\+N\+\_\+\+FLOORS\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Clears the queue by setting all entries in the matrix to 0. Entries corresponding to buttons that doesn\textquotesingle{}t exist is set to -\/1. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em queue} & Elevator\textquotesingle{}s queue. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{queue_8c_source_l00002}{2}} of file \mbox{\hyperlink{queue_8c_source}{queue.\+c}}.
+
+\mbox{\Hypertarget{queue_8h_afc3373a34448c08f6f0038bc0e6ea4df}\label{queue_8h_afc3373a34448c08f6f0038bc0e6ea4df}} 
+\index{queue.h@{queue.h}!queue\_print@{queue\_print}}
+\index{queue\_print@{queue\_print}!queue.h@{queue.h}}
+\doxysubsubsection{\texorpdfstring{queue\_print()}{queue\_print()}}
+{\footnotesize\ttfamily void queue\+\_\+print (\begin{DoxyParamCaption}\item[{int}]{queue\mbox{[}\+N\+\_\+\+BUTTONS\mbox{]}\mbox{[}\+N\+\_\+\+FLOORS\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Prints the queue to terminal. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em queue} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{queue_8c_source_l00013}{13}} of file \mbox{\hyperlink{queue_8c_source}{queue.\+c}}.
+
+\mbox{\Hypertarget{queue_8h_aded032474aaa38073d779f3572e88d2e}\label{queue_8h_aded032474aaa38073d779f3572e88d2e}} 
+\index{queue.h@{queue.h}!queue\_update@{queue\_update}}
+\index{queue\_update@{queue\_update}!queue.h@{queue.h}}
+\doxysubsubsection{\texorpdfstring{queue\_update()}{queue\_update()}}
+{\footnotesize\ttfamily void queue\+\_\+update (\begin{DoxyParamCaption}\item[{int}]{queue\mbox{[}\+N\+\_\+\+BUTTONS\mbox{]}\mbox{[}\+N\+\_\+\+FLOORS\mbox{]} }\end{DoxyParamCaption})}
+
+
+
+Updates entries in the queue if the given button is pressed on the panel. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em queue} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{queue_8c_source_l00026}{26}} of file \mbox{\hyperlink{queue_8c_source}{queue.\+c}}.
+

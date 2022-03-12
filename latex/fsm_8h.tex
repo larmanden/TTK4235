@@ -1,0 +1,162 @@
+\hypertarget{fsm_8h}{}\doxysection{source/fsm.h File Reference}
+\label{fsm_8h}\index{source/fsm.h@{source/fsm.h}}
+
+
+The elevators control system implemented as a finite state machine.  
+
+
+{\ttfamily \#include \char`\"{}timer.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}elevator.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{fsm_8h_a544184483e70276bdd08ea9387c759dc}{fsm\+\_\+init}} (\mbox{\hyperlink{structelevator}{elevator}} $\ast$el)
+\begin{DoxyCompactList}\small\item\em Initializing the elevator. Makes sure the elevator is in a defined floor before handling orders. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fsm_8h_aa3d492349a41192c22adf34e8998225c}{fsm\+\_\+run}} (\mbox{\hyperlink{structelevator}{elevator}} $\ast$el)
+\begin{DoxyCompactList}\small\item\em The main loop for the program. Controls the switching of the elevators given states. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fsm_8h_aac27fb6111ea92a93c516024ba4f96ef}{fsm\+\_\+idle}} (\mbox{\hyperlink{structelevator}{elevator}} $\ast$el)
+\begin{DoxyCompactList}\small\item\em Running actions for the elevator when it is waiting for an order. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fsm_8h_a86531bcbdee3f2dd9da8abd24b6d9f5b}{fsm\+\_\+moving}} (\mbox{\hyperlink{structelevator}{elevator}} $\ast$el)
+\begin{DoxyCompactList}\small\item\em Running actions for the elevator when it is handling an order. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fsm_8h_a9967fc494ad00be3ebde2163464c016f}{fsm\+\_\+door\+\_\+open}} (\mbox{\hyperlink{structelevator}{elevator}} $\ast$el)
+\begin{DoxyCompactList}\small\item\em Running actions for the elevator when it has arrived at it\textquotesingle{}s destination. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{fsm_8h_a69c1174f8092050b76f11aa072901ce3}{fsm\+\_\+emergency\+\_\+stop}} (\mbox{\hyperlink{structelevator}{elevator}} $\ast$el)
+\begin{DoxyCompactList}\small\item\em Running actions for the elevator when the stopbutton is pressed. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+The elevators control system implemented as a finite state machine. 
+
+\begin{DoxyAuthor}{Author}
+your name (\href{mailto:you@domain.com}{\texttt{ you@domain.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2022-\/03-\/12
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2022 
+\end{DoxyCopyright}
+
+
+Definition in file \mbox{\hyperlink{fsm_8h_source}{fsm.\+h}}.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{fsm_8h_a9967fc494ad00be3ebde2163464c016f}\label{fsm_8h_a9967fc494ad00be3ebde2163464c016f}} 
+\index{fsm.h@{fsm.h}!fsm\_door\_open@{fsm\_door\_open}}
+\index{fsm\_door\_open@{fsm\_door\_open}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{fsm\_door\_open()}{fsm\_door\_open()}}
+{\footnotesize\ttfamily void fsm\+\_\+door\+\_\+open (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structelevator}{elevator}} $\ast$}]{el }\end{DoxyParamCaption})}
+
+
+
+Running actions for the elevator when it has arrived at it\textquotesingle{}s destination. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em el} & The elevator. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{fsm_8c_source_l00050}{50}} of file \mbox{\hyperlink{fsm_8c_source}{fsm.\+c}}.
+
+\mbox{\Hypertarget{fsm_8h_a69c1174f8092050b76f11aa072901ce3}\label{fsm_8h_a69c1174f8092050b76f11aa072901ce3}} 
+\index{fsm.h@{fsm.h}!fsm\_emergency\_stop@{fsm\_emergency\_stop}}
+\index{fsm\_emergency\_stop@{fsm\_emergency\_stop}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{fsm\_emergency\_stop()}{fsm\_emergency\_stop()}}
+{\footnotesize\ttfamily void fsm\+\_\+emergency\+\_\+stop (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structelevator}{elevator}} $\ast$}]{el }\end{DoxyParamCaption})}
+
+
+
+Running actions for the elevator when the stopbutton is pressed. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em el} & The elevator. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{fsm_8c_source_l00160}{160}} of file \mbox{\hyperlink{fsm_8c_source}{fsm.\+c}}.
+
+\mbox{\Hypertarget{fsm_8h_aac27fb6111ea92a93c516024ba4f96ef}\label{fsm_8h_aac27fb6111ea92a93c516024ba4f96ef}} 
+\index{fsm.h@{fsm.h}!fsm\_idle@{fsm\_idle}}
+\index{fsm\_idle@{fsm\_idle}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{fsm\_idle()}{fsm\_idle()}}
+{\footnotesize\ttfamily void fsm\+\_\+idle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structelevator}{elevator}} $\ast$}]{el }\end{DoxyParamCaption})}
+
+
+
+Running actions for the elevator when it is waiting for an order. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em el} & The elevator. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{fsm_8c_source_l00036}{36}} of file \mbox{\hyperlink{fsm_8c_source}{fsm.\+c}}.
+
+\mbox{\Hypertarget{fsm_8h_a544184483e70276bdd08ea9387c759dc}\label{fsm_8h_a544184483e70276bdd08ea9387c759dc}} 
+\index{fsm.h@{fsm.h}!fsm\_init@{fsm\_init}}
+\index{fsm\_init@{fsm\_init}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{fsm\_init()}{fsm\_init()}}
+{\footnotesize\ttfamily void fsm\+\_\+init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structelevator}{elevator}} $\ast$}]{el }\end{DoxyParamCaption})}
+
+
+
+Initializing the elevator. Makes sure the elevator is in a defined floor before handling orders. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em el} & The elevator. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{fsm_8c_source_l00004}{4}} of file \mbox{\hyperlink{fsm_8c_source}{fsm.\+c}}.
+
+\mbox{\Hypertarget{fsm_8h_a86531bcbdee3f2dd9da8abd24b6d9f5b}\label{fsm_8h_a86531bcbdee3f2dd9da8abd24b6d9f5b}} 
+\index{fsm.h@{fsm.h}!fsm\_moving@{fsm\_moving}}
+\index{fsm\_moving@{fsm\_moving}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{fsm\_moving()}{fsm\_moving()}}
+{\footnotesize\ttfamily void fsm\+\_\+moving (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structelevator}{elevator}} $\ast$}]{el }\end{DoxyParamCaption})}
+
+
+
+Running actions for the elevator when it is handling an order. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em el} & The elevator. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{fsm_8c_source_l00081}{81}} of file \mbox{\hyperlink{fsm_8c_source}{fsm.\+c}}.
+
+\mbox{\Hypertarget{fsm_8h_aa3d492349a41192c22adf34e8998225c}\label{fsm_8h_aa3d492349a41192c22adf34e8998225c}} 
+\index{fsm.h@{fsm.h}!fsm\_run@{fsm\_run}}
+\index{fsm\_run@{fsm\_run}!fsm.h@{fsm.h}}
+\doxysubsubsection{\texorpdfstring{fsm\_run()}{fsm\_run()}}
+{\footnotesize\ttfamily void fsm\+\_\+run (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{structelevator}{elevator}} $\ast$}]{el }\end{DoxyParamCaption})}
+
+
+
+The main loop for the program. Controls the switching of the elevators given states. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in,out}}  & {\em el} & The elevator. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \mbox{\hyperlink{fsm_8c_source_l00014}{14}} of file \mbox{\hyperlink{fsm_8c_source}{fsm.\+c}}.
+
