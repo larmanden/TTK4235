@@ -2,11 +2,6 @@
  * @file fsm.h
  * @author your name (you@domain.com)
  * @brief The elevators control system implemented as a finite state machine.
- * @version 0.1
- * @date 2022-03-12
- * 
- * @copyright Copyright (c) 2022
- * 
  */
 #pragma once
 #include "timer.h"

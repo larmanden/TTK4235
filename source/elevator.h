@@ -1,12 +1,6 @@
 /**
  * @file elevator.h
- * @author your name (you@domain.com)
  * @brief The Elevator, it's states and corresponding functions for the Elevator.
- * @version 0.1
- * @date 2022-03-11
- * 
- * @copyright Copyright (c) 2022
- * 
  */
 
 #pragma once

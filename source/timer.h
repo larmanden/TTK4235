@@ -2,11 +2,6 @@
  * @file timer.h
  * @author your name (you@domain.com)
  * @brief Functions to keep the door open for a  period of time.
- * @version 0.1
- * @date 2022-03-11
- * 
- * @copyright Copyright (c) 2022
- * 
  */
 
 #pragma once

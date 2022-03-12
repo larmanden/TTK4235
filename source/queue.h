@@ -1,12 +1,7 @@
 /**
  * @file queue.h
  * @author your name (you@domain.com)
- * @brief Functions for the elevators queue system. The queue is defined as a 3x4 matrix.
- * @version 0.1
- * @date 2022-03-11
- * 
- * @copyright Copyright (c) 2022
- * 
+ * @brief Functions for the elevators queue system. The queue is defined as a 3x4 matrix. 
  */
 #pragma once
 #include "driver/elevio.h"
