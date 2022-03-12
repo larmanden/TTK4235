@@ -43,7 +43,7 @@ typedef struct elevator elevator;
  * @param [in,out] el The elevator.
  * @param [in] newdir New direction for the elevator.
  */
-void elev_update_dir(elevator* el, MotorDirection newdir);
+void elevator_update_dir(elevator* el, MotorDirection newdir);
 
 /**
  * @brief Checks wether the queue has any orders.
@@ -51,7 +51,7 @@ void elev_update_dir(elevator* el, MotorDirection newdir);
  * @param [in,out] el The elevator.
  * @return 1 if there is a button pressed, 0 if not.
  */
-int elev_has_order(elevator* el);
+int elevator_has_order(elevator* el);
 
 /**
  * @brief Checks if there is an order above the elevator's current position.
@@ -59,7 +59,7 @@ int elev_has_order(elevator* el);
  * @param [in,out] el The elevator.
  * @return 1 if there is an order above, 0 if not.
  */
-int elev_order_above(elevator* el);
+int elevator_order_above(elevator* el);
 
 /**
  * @brief Checks if there is an order below the elevator's current position.
@@ -67,21 +67,21 @@ int elev_order_above(elevator* el);
  * @param [in,out] el The elevator.
  * @return 1 if there is an order below, 0 if not. 
  */
-int elev_order_below(elevator* el);
+int elevator_order_below(elevator* el);
 
 /**
  * @brief Removes all orders to the elevator's current floor.
  * 
  * @param [in, out] el The elevator.
  */
-void elev_remove_last_order(elevator* el);
+void elevator_remove_last_order(elevator* el);
 
 /**
  * @brief Updates the elevator's current floor if it is in a defined floor.
  * 
  * @param [in, out] el The elevator.
  */
-void elev_update_current_floor(elevator* el);
+void elevator_update_current_floor(elevator* el);
 
 /**
  * @brief Finds the furthest button pressed in the opposite direction of the elevator's current direction.
@@ -89,7 +89,7 @@ void elev_update_current_floor(elevator* el);
  * @param [in,out] el The elevator.
  * @return The floorindex to the furthest entry in opposite direction.
  */
-int elev_look_ahead(elevator* el);
+int elevator_look_ahead(elevator* el);
 
 /**
  * @brief Function for deciding wether to go upwards og downwards after an emergency between two floors.
@@ -97,12 +97,12 @@ int elev_look_ahead(elevator* el);
  * @param [in,out] el The elevator.
  * @return MotorDirection, direction the elevator should go.
  */
-MotorDirection elev_move_after_emergency(elevator* el);
+MotorDirection elevator_move_after_emergency(elevator* el);
 
 /**
  * @brief Turns on a buttonlight if the button is pressed. 
  * 
  * @param [in] queue The elevators queue system.
  */
-void elev_btnlights_update(int queue[N_BUTTONS][N_FLOORS]);
+void elevator_btnlights_update(int queue[N_BUTTONS][N_FLOORS]);
 

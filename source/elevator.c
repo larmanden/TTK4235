@@ -1,12 +1,12 @@
 #include "elevator.h"
 
-void elev_update_dir(elevator* el, MotorDirection newdir){
+void elevator_update_dir(elevator* el, MotorDirection newdir){
     el->prev_motor_dir = el->current_motor_dir;
     el->current_motor_dir = newdir;
     elevio_motorDirection(el->current_motor_dir);
 }
 
-int elev_has_order(elevator* el){
+int elevator_has_order(elevator* el){
      for (int btn = 0; btn < N_BUTTONS; btn++){
         for (int floor = 0; floor < N_FLOORS; floor++){
             if(el->queue[btn][floor] == 1){
@@ -17,7 +17,7 @@ int elev_has_order(elevator* el){
     return 0;
 }
 
-int elev_order_above(elevator* el){
+int elevator_order_above(elevator* el){
     for (int btn = 0; btn < N_BUTTONS; btn++){
         for (int floor = el->current_floor + 1 ; floor < N_FLOORS; floor++){
             if (el->queue[btn][floor] == 1){
@@ -28,7 +28,7 @@ int elev_order_above(elevator* el){
     return 0;
 }
 
-int elev_order_below(elevator* el){
+int elevator_order_below(elevator* el){
       for (int btn = 0; btn < N_BUTTONS; btn++){
         for (int floor = 0; floor < el->current_floor; floor++){
             if (el->queue[btn][floor] == 1){
@@ -39,7 +39,7 @@ int elev_order_below(elevator* el){
     return 0;
 }
 
-void elev_remove_last_order(elevator* el){
+void elevator_remove_last_order(elevator* el){
     for (int btn = 0; btn < N_BUTTONS; btn++){
         el->queue[btn][el->current_floor] = 0;
     }
@@ -48,14 +48,14 @@ void elev_remove_last_order(elevator* el){
     el->queue[0][3] = -1;  
 }
 
-void elev_update_current_floor(elevator* el){
+void elevator_update_current_floor(elevator* el){
     int tempfloor = elevio_floorSensor();
     if(tempfloor != -1){
         el->current_floor = elevio_floorSensor();
     }
 }
 
-int elev_look_ahead(elevator* el){
+int elevator_look_ahead(elevator* el){
     int stopfloor = -1;
     switch (el->current_motor_dir){
         case DIRN_DOWN:
@@ -88,7 +88,7 @@ int elev_look_ahead(elevator* el){
     return stopfloor;
 }
 
-MotorDirection elev_move_after_emergency(elevator* el){
+MotorDirection elevator_move_after_emergency(elevator* el){
     //Loop variables
     int startfloor_loop_up = 0;
     int endfloor_loop_up = N_FLOORS;
@@ -129,7 +129,7 @@ MotorDirection elev_move_after_emergency(elevator* el){
     return DIRN_STOP;
 }
 
-void elev_btnlights_update(int queue[N_BUTTONS][N_FLOORS]){
+void elevator_btnlights_update(int queue[N_BUTTONS][N_FLOORS]){
      for (int btn = 0; btn < N_BUTTONS; btn++){
         for (int floor = 0; floor < N_FLOORS; floor++){
             if(queue[btn][floor] == 1){
