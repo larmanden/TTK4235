@@ -12,7 +12,6 @@ int main(){
     el.current_motor_dir = DIRN_STOP;
     el.prev_motor_dir = DIRN_STOP;
     el.current_floor = 0;
-    el.timer = 0;
     el.state = IDLE;
 
     fsm_init(&el);

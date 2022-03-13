@@ -25,7 +25,6 @@ struct elevator{
     MotorDirection prev_motor_dir;
     MotorDirection current_motor_dir;
     int current_floor;
-    int timer;
     STATE state;
     int queue[N_BUTTONS][N_FLOORS];
 };
