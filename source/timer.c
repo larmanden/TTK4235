@@ -1,14 +1,12 @@
 #include "timer.h"
 
-
-void timer_start(elevator* el){
-    el->timer = time(NULL);
+void timer_start(void){
+    timer = time(NULL);
 }
 
-
-int timer_done(elevator* el){
-    int current_time = time(NULL);
-    if( (current_time - el->timer) >= 3){
+int timer_done(void){
+    time_t current_time = time(NULL);
+    if( (current_time - timer) >= DOOR_TIME){
         return 1;
     }
     else{return 0;}

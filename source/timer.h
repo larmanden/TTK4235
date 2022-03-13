@@ -1,6 +1,5 @@
 /**
  * @file timer.h
- * @author your name (you@domain.com)
  * @brief Functions to keep the door open for a  period of time.
  */
 
@@ -9,18 +8,17 @@
 #include <stdio.h>
 #include "elevator.h"
 
-#define DOOR_TIMER 3 
-/**
- * @brief Starts the timer.
- * 
- * @param [in,out] el The elevator.
- */
-void timer_start(elevator* el);
+static time_t timer;
+#define DOOR_TIME 3 
 
 /**
- * @brief Checking wether the time is up.
+ * @brief Starts the timer.
+ */
+void timer_start(void);
+
+/**
+ * @brief Checking wether the time
  * 
- * @param [in, out] el The elevator.
  * @return 1 if the time is up, 0 if not.
  */
-int timer_done(elevator* el);
+int timer_done(void);

@@ -55,8 +55,8 @@ void fsm_door_open(elevator* el){
     elevator_update_current_floor(el);
     elevio_doorOpenLamp(1);
 
-    timer_start(el);
-    while (!timer_done(el)){
+    timer_start();
+    while (!timer_done()){
         printf("DOOR OPEN\n");
         queue_update(el->queue);
         elevator_remove_last_order(el);
@@ -64,7 +64,7 @@ void fsm_door_open(elevator* el){
 
         if (elevio_obstruction()){
             printf("OBSTRUCTION\n");
-            timer_start(el);
+            timer_start();
         }
         if(elevio_stopButton()){
             el->state =EMERGENCY_STOP;
