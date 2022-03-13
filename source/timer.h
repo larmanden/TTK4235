@@ -23,4 +23,4 @@ void timer_start(elevator* el);
  * @param [in, out] el The elevator.
  * @return 1 if the time is up, 0 if not.
  */
-int times_up(elevator* el);
+int timer_done(elevator* el);

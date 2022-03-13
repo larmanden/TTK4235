@@ -56,11 +56,11 @@ void fsm_door_open(elevator* el){
     elevio_doorOpenLamp(1);
 
     timer_start(el);
-    while (!times_up(el)){
+    while (!timer_done(el)){
         printf("DOOR OPEN\n");
         queue_update(el->queue);
-        elevator_btnlights_update(el->queue);
         elevator_remove_last_order(el);
+        elevator_btnlights_update(el->queue);
 
         if (elevio_obstruction()){
             printf("OBSTRUCTION\n");
