@@ -6,6 +6,8 @@
 
 #include "fsm.h"
 
+//Bug when restarting elevator between two floors after emergency. 
+
 int main(){
 
     elevator el;

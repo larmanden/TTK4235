@@ -101,18 +101,21 @@ void fsm_moving(elevator* el){
             if(el->queue[BUTTON_HALL_DOWN][tempfloor] == 1 || el->queue[BUTTON_CAB][tempfloor] == 1){
                 elevator_update_dir(el, DIRN_STOP);
                 el->state = DOOR_OPEN;
+                return;
             }
             break;
         case DIRN_UP:
             if(el->queue[BUTTON_HALL_UP][tempfloor] == 1 || el->queue[BUTTON_CAB][tempfloor] == 1){
                 elevator_update_dir(el, DIRN_STOP);
                 el->state = DOOR_OPEN;
+                return;
             }
             break;
         case DIRN_STOP:
             if(el->queue[BUTTON_HALL_DOWN][tempfloor] == 1 || el->queue[BUTTON_HALL_UP][tempfloor] == 1 || el->queue[BUTTON_CAB][tempfloor] == 1){
                 elevator_update_dir(el, DIRN_STOP);
                 el->state = DOOR_OPEN;
+                return;
             }
             break;
         default:
@@ -122,6 +125,7 @@ void fsm_moving(elevator* el){
         if(tempfloor == elevator_look_ahead(el)){
             elevator_update_dir(el, DIRN_STOP);
             el->state = DOOR_OPEN;
+            return;
         }
     }
     //Setting motordirection based on target
