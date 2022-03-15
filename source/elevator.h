@@ -26,7 +26,7 @@ struct Elevator{
     /**
      * @brief Elevator's previous motor-direction.
      * 
-     * It is needed to know the last direction for determining what way to start the elevator if it is stopped between two floors.
+     * It is necessary to know the last direction for determining what way to start the elevator if it is stopped between two floors.
      */
     MotorDirection prev_motor_dir;
     MotorDirection current_motor_dir;
@@ -36,7 +36,17 @@ struct Elevator{
      * When the elevator is between two floors @p current_floor will store the value of the last floor.
      */
     int current_floor;
+    /**
+     * @brief Stores the current state of the elevator.
+     * 
+     * The @p state is used for implementing control of the elevator in the fsm.h module.
+     */
     STATE state;
+    /**
+     * @brief The elevator's queue system implemented as a 3x4 matrix. 
+     * 
+     * Relevant queue-functions can be found in queue.h
+     */
     int queue[N_BUTTONS][N_FLOORS];
 };
 
@@ -50,7 +60,7 @@ typedef struct Elevator Elevator;
 void elevator_update_dir(Elevator* el, MotorDirection newdir);
 
 /**
- * @brief Checks wether the queue has any orders.
+ * @brief Checks wether the elevator's queue has any orders.
  * 
  * @param [in,out] el The elevator.
  * @return 1 if there is a button pressed, 0 if not.

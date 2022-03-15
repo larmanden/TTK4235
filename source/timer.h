@@ -1,13 +1,13 @@
 /**
  * @file timer.h
  * @brief Timer library.
- * Is used to keep the elevator's door open for 3 seconds.
+ * Is used to keep the Elevator's door open for 3 seconds.
  */
 
 #pragma once
 #include <time.h>
 #include <stdio.h>
-#include "elevator.h"
+
 
 /**
  * @brief @p timer stores the time.
@@ -22,7 +22,7 @@ static time_t timer;
 #define TIMER_DURATION 3 
 
 /**
- * @brief Starts the timer by overwriting  @p timer to current time.
+ * @brief Starts the timer by overwriting  @p timer variable to current time.
  */
 void timer_start(void);
 

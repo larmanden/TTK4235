@@ -8,7 +8,7 @@
 #include "driver/elevio.h"
 #include <stdio.h>
 #include "stdlib.h"
-#include "elevator.h"
+
 
 /**
  * @brief Clears the queue by setting all entries in the matrix to 0. 
@@ -27,9 +27,7 @@ void queue_clear(int queue[N_BUTTONS][N_FLOORS]);
 void queue_print(int queue[N_BUTTONS][N_FLOORS]);
 
 /**
- * @brief Updates entries in the queue if the given button is pressed on the panel.
- * 
- * Loops thorugh the matrix and checks if the specific button is pressed on the elevator-panel.
+ * @brief Updates entries in the queue if a given button is pressed on the panel.
  * 
  * @param [in, out] queue 
  */
