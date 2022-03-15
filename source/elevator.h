@@ -62,26 +62,26 @@ void elevator_update_dir(Elevator* el, MotorDirection newdir);
 /**
  * @brief Checks wether the elevator's queue has any orders.
  * 
- * @param [in,out] el The elevator.
+ * @param [in] el The elevator.
  * @return 1 if there is a button pressed, 0 if not.
  */
-int elevator_has_order(Elevator* el);
+int elevator_has_order(Elevator el);
 
 /**
  * @brief Checks if there is an order above the elevator's current position.
  * 
- * @param [in,out] el The elevator.
+ * @param [in] el The elevator.
  * @return 1 if there is an order above, 0 if not.
  */
-int elevator_order_above(Elevator* el);
+int elevator_order_above(Elevator el);
 
 /**
  * @brief Checks if there is an order below the elevator's current position.
  * 
- * @param [in,out] el The elevator.
+ * @param [in] el The elevator.
  * @return 1 if there is an order below, 0 if not. 
  */
-int elevator_order_below(Elevator* el);
+int elevator_order_below(Elevator el);
 
 /**
  * @brief Removes all orders to the elevator's current floor.
@@ -100,18 +100,18 @@ void elevator_update_current_floor(Elevator* el);
 /**
  * @brief Finds the furthest button pressed in the opposite direction of the elevator's current direction.
  * 
- * @param [in,out] el The elevator.
+ * @param [in] el The elevator.
  * @return The floorindex to the furthest entry in opposite direction.
  */
-int elevator_look_ahead(Elevator* el);
+int elevator_look_ahead(Elevator el);
 
 /**
  * @brief Function for deciding wether to go upwards og downwards after an emergency between two floors.
  * 
- * @param [in,out] el The elevator.
+ * @param [in] el The elevator.
  * @return MotorDirection, direction the elevator should go.
  */
-MotorDirection elevator_move_after_emergency(Elevator* el);
+MotorDirection elevator_move_after_emergency(Elevator el);
 
 /**
  * @brief Turns on a buttonlight if the button is pressed. 
