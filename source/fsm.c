@@ -1,7 +1,7 @@
 #include "fsm.h"
 
 
-void fsm_init(elevator* el){
+void fsm_init(Elevator* el){
     elevio_init();
     while(elevio_floorSensor() == -1){
         elevio_motorDirection(DIRN_DOWN);
@@ -11,7 +11,7 @@ void fsm_init(elevator* el){
     queue_clear(el->queue);
 }
 
-void fsm_run(elevator* el){
+void fsm_run(Elevator* el){
     while (1){
         switch (el->state)
         {
@@ -33,7 +33,7 @@ void fsm_run(elevator* el){
     }
 }
 
-void fsm_idle(elevator* el){
+void fsm_idle(Elevator* el){
     printf("IDLE \n");
     elevator_update_current_floor(el);
     queue_update(el->queue);
@@ -47,7 +47,7 @@ void fsm_idle(elevator* el){
     }
 }
 
-void fsm_door_open(elevator* el){
+void fsm_door_open(Elevator* el){
     if(elevio_stopButton()){
         el->state = EMERGENCY_STOP;
     }
@@ -78,7 +78,7 @@ void fsm_door_open(elevator* el){
     elevio_doorOpenLamp(0);
 }
 
-void fsm_moving(elevator* el){
+void fsm_moving(Elevator* el){
 
     if(elevio_stopButton()){
         el->state = EMERGENCY_STOP;
@@ -161,7 +161,7 @@ void fsm_moving(elevator* el){
     }
 }
 
-void fsm_emergency_stop(elevator* el){
+void fsm_emergency_stop(Elevator* el){
     queue_clear(el->queue);
     
     while (elevio_stopButton()){
