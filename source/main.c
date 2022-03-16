@@ -8,7 +8,7 @@
 
 int main(){
 
-    elevator el;
+    Elevator el;
     el.current_motor_dir = DIRN_STOP;
     el.prev_motor_dir = DIRN_STOP;
     el.current_floor = 0;

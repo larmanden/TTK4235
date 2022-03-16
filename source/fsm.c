@@ -42,7 +42,7 @@ void fsm_idle(Elevator* el){
     if(elevio_stopButton()){
         el->state = EMERGENCY_STOP;
     }
-    else if(elevator_has_order(el)){
+    else if(elevator_has_order(*el)){
         el->state = MOVING;
     }
 }
@@ -71,7 +71,7 @@ void fsm_door_open(Elevator* el){
             return;
         }
     }
-    if(elevator_has_order(el)){
+    if(elevator_has_order(*el)){
         el->state = MOVING;
     }
     else{el->state = IDLE;}
@@ -122,7 +122,7 @@ void fsm_moving(Elevator* el){
             break;
         }
         
-        if(tempfloor == elevator_look_ahead(el)){
+        if(tempfloor == elevator_look_ahead(*el)){
             elevator_update_dir(el, DIRN_STOP);
             el->state = DOOR_OPEN;
             return;
@@ -131,30 +131,30 @@ void fsm_moving(Elevator* el){
     //Setting motordirection based on target
     switch (el->current_motor_dir){
     case DIRN_DOWN:
-        if(elevator_order_below(el)){
+        if(elevator_order_below(*el)){
             elevator_update_dir(el, DIRN_DOWN);
         }
-        else if (elevator_order_above(el)){
+        else if (elevator_order_above(*el)){
             elevator_update_dir(el, DIRN_UP);
         }
         break;
     case DIRN_STOP:
-        if(elevator_order_above(el)){
+        if(elevator_order_above(*el)){
             elevator_update_dir(el, DIRN_UP);
         }
-        else if (elevator_order_below(el)){
+        else if (elevator_order_below(*el)){
             elevator_update_dir(el, DIRN_DOWN);
         }
         else if(elevio_floorSensor() == -1){
-            MotorDirection newdir = elevator_move_after_emergency(el);
+            MotorDirection newdir = elevator_move_after_emergency(*el);
             elevator_update_dir(el, newdir);
         }
         break;
     case DIRN_UP:  
-        if(elevator_order_above(el)){
+        if(elevator_order_above(*el)){
             elevator_update_dir(el, DIRN_UP);
         }
-        else if (elevator_order_below(el)){
+        else if (elevator_order_below(*el)){
             elevator_update_dir(el, DIRN_DOWN);
         }
         break;
