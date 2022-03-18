@@ -9,11 +9,7 @@
 #include <stdio.h>
 
 
-/**
- * @brief @p timer stores the time.
- * 
- */
-static time_t timer;
+static time_t timer;  
 
 /**
  * @brief Definition of the timer's duration.
